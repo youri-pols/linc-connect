@@ -19,6 +19,30 @@ export function formatRelativeDate(dateString: string): string {
   return formatDate(dateString);
 }
 
+/**
+ * "Dinsdag 11 april" — used by the home dashboard briefing line.
+ * Capitalises the weekday because `toLocaleDateString` returns it
+ * in lower case.
+ */
+export function formatDayAndMonth(date: Date): string {
+  const formatted = date.toLocaleDateString("nl-NL", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
+/**
+ * "Goedemorgen" / "Goedemiddag" / "Goedenavond" based on the hour.
+ */
+export function getGreeting(date: Date): string {
+  const hour = date.getHours();
+  if (hour < 12) return "Goedemorgen";
+  if (hour < 18) return "Goedemiddag";
+  return "Goedenavond";
+}
+
 export function getInitials(name: string): string {
   return name
     .split(" ")

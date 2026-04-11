@@ -51,11 +51,17 @@ export function AppShell({ userName, userPhoto, children }: AppShellProps) {
 
   const showWriteArticle = role === "ervaren" || role === "begeleider";
 
+  /*
+   * The shell owns the viewport height. `<main>` is `overflow-hidden`
+   * so each page can place its own scroll container(s) inside — the
+   * home dashboard, for example, wants to scroll the main column
+   * while keeping the right panel static.
+   */
   return (
-    <div className="flex min-h-full">
+    <div className="flex h-screen">
       <SidebarNav userName={userName} userPhoto={userPhoto} open={sidebarOpen} />
       <div
-        className={`flex-1 flex flex-col min-h-screen transition-[margin] duration-300 ease-in-out ${
+        className={`flex-1 flex flex-col min-w-0 min-h-0 transition-[margin] duration-300 ease-in-out ${
           sidebarOpen ? "lg:ml-71" : "lg:ml-0"
         }`}
       >
@@ -73,7 +79,7 @@ export function AppShell({ userName, userPhoto, children }: AppShellProps) {
             onNavigate={() => setMobileMenuOpen(false)}
           />
         )}
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 min-h-0 overflow-hidden">{children}</main>
       </div>
     </div>
   );

@@ -39,11 +39,11 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
 
         <div className="w-px bg-black/15" />
 
-        <div className="flex-1 flex items-center justify-between px-6">
+        <div className="flex-1 flex items-center justify-between ps-4 pr-6">
           <p className="text-nav">{title}</p>
 
           <div className="flex items-center gap-3">
-            <button className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md pl-3 pr-14 py-1.5 hover:border-black/20 transition-colors">
+            <button className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md pl-3 pr-14 py-1.5 hover:bg-black/10 transition-colors">
               <span className="icon text-black/50">search</span>
               <span className="text-xs text-black/50">Type om te zoeken...</span>
             </button>

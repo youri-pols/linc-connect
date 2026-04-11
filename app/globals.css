@@ -60,8 +60,20 @@ html {
   --color-green: var(--green);
   --color-red: var(--red);
   --color-orange: var(--orange);
+
   --font-display: "Safiro", sans-serif;
   --font-sans: var(--font-roboto);
+
+  /* Extra size steps not in Tailwind's defaults */
+  --text-2xs: 0.625rem;    /* 10px */
+  --text-13: 0.8125rem;    /* 13px */
+  --text-h1: 2.5625rem;    /* 41px — beginner home headline */
+
+  /* 120% line-height for dense card labels */
+  --leading-card: 1.2;
+
+  /* Shared card shadow used on grouped cards */
+  --shadow-card: 0 0 2.5rem 0 rgba(0, 0, 0, 0.05);
 }
 
 body {
@@ -70,47 +82,55 @@ body {
   line-height: 1.4;
 }
 
-.font-display {
-  letter-spacing: -0.06em;
-  line-height: 0.8;
-}
-
-.text-nav {
-  font-family: "Safiro", sans-serif;
-  font-weight: 500;
-  font-size: 0.8125rem;
-  letter-spacing: -0.06em;
-  line-height: 1.6;
-}
-
-.text-nav-user {
-  font-family: "Safiro", sans-serif;
-  font-weight: 500;
-  font-size: 0.875rem;
-  letter-spacing: -0.06em;
-  line-height: 1;
-}
-
-.icon {
-  font-family: "Material Symbols Rounded";
-  font-weight: 300;
-  font-style: normal;
-  font-size: 1rem;
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-}
-
 /*
- * Roboto body base. Holds family/tracking/line-height only so it can
- * be combined with Tailwind size utilities (text-xs, text-sm, ...).
+ * Custom classes live in @layer components so Tailwind utilities
+ * (text-sm, leading-normal, ...) can still override individual
+ * properties on elements that use them.
  */
-.text-body {
-  font-family: var(--font-roboto), "Roboto", sans-serif;
-  letter-spacing: -0.01em;
-  line-height: 1.4;
+@layer components {
+  .font-display {
+    font-family: "Safiro", sans-serif;
+    letter-spacing: -0.06em;
+    line-height: 0.8;
+  }
+
+  .text-nav {
+    font-family: "Safiro", sans-serif;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: -0.06em;
+    line-height: 1.6;
+  }
+
+  .text-nav-user {
+    font-family: "Safiro", sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: -0.06em;
+    line-height: 1;
+  }
+
+  .icon {
+    font-family: "Material Symbols Rounded";
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1rem;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  }
+
+  /*
+   * Roboto body base. Holds family/tracking/line-height only so it
+   * can be combined with Tailwind size utilities (text-xs, text-sm).
+   */
+  .text-body {
+    font-family: var(--font-roboto), "Roboto", sans-serif;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+  }
 }
