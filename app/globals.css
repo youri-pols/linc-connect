@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @font-face {
   font-family: "Material Symbols Rounded";
   src: url("/fonts/material-symbols/MaterialSymbolsRounded-Light.woff2") format("woff2");
@@ -36,6 +37,17 @@
   font-display: swap;
 }
 
+/*
+ * Fluid root font-size. Design baseline is 1440px viewport = 16px,
+ * linearly scaling up to 24px at 3840px (4K). Clamp keeps it within
+ * those bounds so anything below 1440px uses the design baseline and
+ * anything above 4K stops scaling. All rem-based sizes (Tailwind
+ * utilities and the custom classes below) inherit this scaling.
+ */
+html {
+  font-size: clamp(16px, calc(11.2px + 0.333vw), 24px);
+}
+
 :root {
   --purple: #7161ef;
   --green: #679436;
@@ -58,36 +70,32 @@ body {
   line-height: 1.4;
 }
 
-/* Safiro display headings */
 .font-display {
   letter-spacing: -0.06em;
   line-height: 0.8;
 }
 
-/* Safiro nav item */
 .text-nav {
   font-family: "Safiro", sans-serif;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 0.8125rem;
   letter-spacing: -0.06em;
   line-height: 1.6;
 }
 
-/* Safiro nav user */
 .text-nav-user {
   font-family: "Safiro", sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0.875rem;
   letter-spacing: -0.06em;
   line-height: 1;
 }
 
-/* Material Symbols */
 .icon {
   font-family: "Material Symbols Rounded";
   font-weight: 300;
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -97,10 +105,12 @@ body {
   direction: ltr;
 }
 
-/* Roboto body */
+/*
+ * Roboto body base. Holds family/tracking/line-height only so it can
+ * be combined with Tailwind size utilities (text-xs, text-sm, ...).
+ */
 .text-body {
   font-family: var(--font-roboto), "Roboto", sans-serif;
-  font-size: 14px;
   letter-spacing: -0.01em;
   line-height: 1.4;
 }
