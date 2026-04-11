@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 @font-face {
+  font-family: "Material Symbols Rounded";
+  src: url("/fonts/material-symbols/MaterialSymbolsRounded-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: "Safiro";
   src: url("/fonts/safiro/safiro-regular.woff2") format("woff2");
   font-weight: 400;
@@ -55,6 +62,39 @@ body {
 .font-display {
   letter-spacing: -0.06em;
   line-height: 0.8;
+}
+
+/* Safiro nav item */
+.text-nav {
+  font-family: "Safiro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.06em;
+  line-height: 1.6;
+}
+
+/* Safiro nav user */
+.text-nav-user {
+  font-family: "Safiro", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+/* Material Symbols */
+.icon {
+  font-family: "Material Symbols Rounded";
+  font-weight: 300;
+  font-style: normal;
+  font-size: 16px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
 }
 
 /* Roboto body */
