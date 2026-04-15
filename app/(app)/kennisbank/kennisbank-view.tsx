@@ -40,6 +40,7 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
   const [search, setSearch] = useState("");
   const [selectedDiscipline, setSelectedDiscipline] = useState<KnowledgeDiscipline | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<KnowledgeCategory | null>(null);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const filteredArticles = useMemo(() => {
     const needle = search.trim().toLowerCase();
@@ -86,26 +87,97 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
       .sort((a, b) => b.count - a.count);
   }, [articles, selectedDiscipline, search]);
 
+  const activeFilterCount =
+    (selectedDiscipline ? 1 : 0) + (selectedCategory ? 1 : 0);
+
+  /* Shared filter sections — rendered both in the mobile inline
+     panel (toggled by the "Filteren" button) and in the desktop
+     sidebar. Keeping it inline dedupes ~30 lines of JSX without
+     a separate component. */
+  const filterSections = (
+    <>
+      <section className="flex flex-col gap-3">
+        <h3 className="font-display font-medium text-xs leading-normal text-black/50 px-6">
+          Disciplines
+        </h3>
+        <div className="flex flex-col">
+          {sortedDisciplines.map((disc) => (
+            <FilterItem
+              key={disc.id}
+              label={disc.label}
+              count={disc.count}
+              active={selectedDiscipline === disc.id}
+              onClick={() =>
+                setSelectedDiscipline(
+                  selectedDiscipline === disc.id ? null : disc.id,
+                )
+              }
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-3 pt-6 border-t border-black/15">
+        <h3 className="font-display font-medium text-xs leading-normal text-black/50 px-6">
+          Categorieën
+        </h3>
+        <div className="flex flex-col">
+          {sortedCategories.map((cat) => (
+            <FilterItem
+              key={cat.id}
+              label={cat.label}
+              count={cat.count}
+              active={selectedCategory === cat.id}
+              onClick={() =>
+                setSelectedCategory(
+                  selectedCategory === cat.id ? null : cat.id,
+                )
+              }
+            />
+          ))}
+        </div>
+      </section>
+    </>
+  );
+
   return (
     <div className="flex h-full">
       <div className="flex-1 min-w-0 overflow-y-auto flex flex-col gap-6 p-4 lg:p-8">
         {/* Header */}
-        <div className="flex items-baseline justify-between gap-4">
+        <div className="flex items-baseline justify-between gap-4 flex-wrap">
           <div className="flex items-baseline gap-3 min-w-0">
             <h1 className="font-display font-medium text-h2">Kennisbank</h1>
             <p className="text-body text-sm text-black/60">
               {filteredArticles.length} artikelen
             </p>
           </div>
-          {showWriteArticle && (
-            <Link
-              href="/kennisbank/nieuw"
-              className="shrink-0 cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
+          <div className="flex items-center gap-2">
+            {/* Mobile filter toggle — hidden on desktop where the
+                sidebar is always visible. */}
+            <button
+              type="button"
+              onClick={() => setMobileFiltersOpen((o) => !o)}
+              className="lg:hidden cursor-pointer flex items-center gap-1.5 border border-black/10 rounded-md px-3 py-1.5 text-body text-xs text-black hover:bg-black hover:text-white hover:border-black transition-colors"
+              aria-expanded={mobileFiltersOpen}
             >
-              <span className="icon text-white">add_2</span>
-              <span className="text-xs text-white">Schrijf een artikel</span>
-            </Link>
-          )}
+              <span className="icon h-4">tune</span>
+              Filteren
+              {activeFilterCount > 0 && (
+                <span className="ml-0.5 rounded-full bg-purple text-white text-[10px] leading-none px-1.5 py-0.5 font-medium">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+            {showWriteArticle && (
+              <Link
+                href="/kennisbank/nieuw"
+                className="shrink-0 cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
+              >
+                <span className="icon text-white">add_2</span>
+                <span className="text-xs text-white">Schrijf een artikel</span>
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* Mobile search (right panel is hidden below lg) */}
@@ -121,6 +193,13 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
             />
           </div>
         </div>
+
+        {/* Mobile inline filters */}
+        {mobileFiltersOpen && (
+          <div className="lg:hidden bg-white border border-black/10 rounded-lg py-6 flex flex-col gap-6">
+            {filterSections}
+          </div>
+        )}
 
         {/* Articles grid */}
         {filteredArticles.length > 0 ? (
@@ -151,43 +230,7 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
           </div>
         </div>
 
-        <section className="flex flex-col gap-3">
-          <h3 className="font-display font-medium text-xs leading-normal text-black/50 px-6">
-            Disciplines
-          </h3>
-          <div className="flex flex-col">
-            {sortedDisciplines.map((disc) => (
-              <FilterItem
-                key={disc.id}
-                label={disc.label}
-                count={disc.count}
-                active={selectedDiscipline === disc.id}
-                onClick={() =>
-                  setSelectedDiscipline(selectedDiscipline === disc.id ? null : disc.id)
-                }
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="flex flex-col gap-3 pt-6 border-t border-black/15">
-          <h3 className="font-display font-medium text-xs leading-normal text-black/50 px-6">
-            Categorieën
-          </h3>
-          <div className="flex flex-col">
-            {sortedCategories.map((cat) => (
-              <FilterItem
-                key={cat.id}
-                label={cat.label}
-                count={cat.count}
-                active={selectedCategory === cat.id}
-                onClick={() =>
-                  setSelectedCategory(selectedCategory === cat.id ? null : cat.id)
-                }
-              />
-            ))}
-          </div>
-        </section>
+        {filterSections}
       </aside>
     </div>
   );
