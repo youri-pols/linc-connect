@@ -1,4 +1,4 @@
-export type AnimatedArrowSize = "md" | "sm";
+export type AnimatedArrowSize = "md" | "sm" | "xs";
 export type AnimatedArrowGlyph = "arrow" | "chevron";
 
 interface AnimatedArrowProps {
@@ -15,14 +15,16 @@ interface AnimatedArrowProps {
  * Two independent axes:
  *   - `size`: controls the wrapper (and for "sm" also switches the
  *     glyph to the tiny chevron window used for inline links).
- *       "md" → 16×16 wrapper
+ *       "md" → 16×16 wrapper (12×9 arrow or chevron)
  *       "sm" → narrow 6×16 wrapper tuned to sit next to 12px text
+ *       "xs" → 10×10 wrapper with a compact 10×10 SVG arrow for
+ *              card affordances like "Lees meer"
  *   - `glyph`: which icon to render inside the md wrapper.
  *       "arrow"   → 12×9 custom SVG (Alle taken, Alles bekijken)
  *       "chevron" → Material Symbols chevron_right (Snelkoppelingen)
  *
- * The "sm" size always uses the chevron — the narrow window does
- * not fit the stroked arrow.
+ * The "sm" size always uses the chevron; the "xs" size always uses
+ * the 10×10 arrow.
  *
  * `className` is forwarded to the outer wrapper and is how colour
  * (text-white, text-purple, ...) is passed in; the glyphs inherit
@@ -31,6 +33,7 @@ interface AnimatedArrowProps {
 const sizeClass: Record<AnimatedArrowSize, string> = {
   md: "size-4",
   sm: "w-1.5 h-4",
+  xs: "size-2.5",
 };
 
 function ArrowGlyph({
@@ -43,6 +46,25 @@ function ArrowGlyph({
   if (size === "sm" || glyph === "chevron") {
     return <span className="icon block">chevron_right</span>;
   }
+
+  if (size === "xs") {
+    return (
+      <svg
+        viewBox="0 0 10 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="block w-2.5"
+      >
+        <path
+          d="M5.8335 7.91659L8.75016 4.99992L5.8335 2.08325"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+        />
+        <path d="M8.63102 5H0.714355" stroke="currentColor" strokeMiterlimit="10" />
+      </svg>
+    );
+  }
+
   return (
     <svg
       viewBox="0 0 12 9"

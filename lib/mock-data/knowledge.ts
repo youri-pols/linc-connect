@@ -1,0 +1,157 @@
+import type { KnowledgeArticle } from "@/lib/types/knowledge";
+
+/*
+ * Fase 1 mock kennisbank articles. Counts in the right-panel
+ * filters are derived from this array, so adding/removing an
+ * article automatically keeps the sidebar in sync.
+ */
+export async function getKnowledgeArticles(): Promise<KnowledgeArticle[]> {
+  return [
+    {
+      id: "kb-1",
+      slug: "git-branching-strategie-bij-linc",
+      title: "Git branching strategie bij LiNC",
+      description:
+        "Hoe wij feature branches, hotfixes en releases beheren in onze Git workflows.",
+      discipline: "development",
+      category: "werkprocessen",
+      authorName: "Youri Pols",
+      updatedAtText: "18 februari 2026",
+      readingTimeMinutes: 2,
+      commentCount: 3,
+      openQuestionsCount: 1,
+    },
+    {
+      id: "kb-2",
+      slug: "build-errors-oplossen-in-next-js",
+      title: "Build errors oplossen in Next.js",
+      description:
+        "De meest voorkomende Next.js build errors en hoe je ze in 5 minuten fixt.",
+      discipline: "development",
+      category: "troubleshooting",
+      authorName: "Youri Pols",
+      updatedAtText: "12 februari 2026",
+      readingTimeMinutes: 4,
+      commentCount: 2,
+    },
+    {
+      id: "kb-3",
+      slug: "code-review-checklist",
+      title: "Code review checklist",
+      description:
+        "Waar we op letten bij een pull request review: architectuur, tests, naming en documentatie.",
+      discipline: "development",
+      category: "best-practices",
+      authorName: "Youri Pols",
+      updatedAtText: "2 februari 2026",
+      readingTimeMinutes: 5,
+      commentCount: 4,
+    },
+    {
+      id: "kb-4",
+      slug: "design-tokens-in-figma-en-code",
+      title: "Design tokens in Figma en code",
+      description:
+        "Één source of truth voor kleur, typografie en spacing — van Figma naar Tailwind.",
+      discipline: "design",
+      category: "tools-setup",
+      authorName: "Youri Pols",
+      updatedAtText: "28 januari 2026",
+      readingTimeMinutes: 6,
+      commentCount: 5,
+    },
+    {
+      id: "kb-5",
+      slug: "assets-exporteren-voor-retina",
+      title: "Assets exporteren voor retina schermen",
+      description:
+        "Hoe je @2x en @3x assets uit Figma haalt zonder elke keer handmatig te slicen.",
+      discipline: "design",
+      category: "werkprocessen",
+      authorName: "Youri Pols",
+      updatedAtText: "20 januari 2026",
+      readingTimeMinutes: 3,
+      commentCount: 1,
+      openQuestionsCount: 2,
+    },
+    {
+      id: "kb-6",
+      slug: "branding-richtlijnen-linc-2026",
+      title: "Branding richtlijnen LiNC 2026",
+      description:
+        "Logogebruik, kleuren, typografie en toepassingen voor alle touchpoints in 2026.",
+      discipline: "design",
+      category: "templates",
+      authorName: "Youri Pols",
+      updatedAtText: "14 januari 2026",
+      readingTimeMinutes: 7,
+      commentCount: 0,
+    },
+    {
+      id: "kb-7",
+      slug: "google-ads-ai-max-campagnes",
+      title: "Google Ads AI Max campagnes",
+      description:
+        "Wanneer je AI Max inzet, welke conversies je doorgeeft en hoe je resultaten leest.",
+      discipline: "marketing",
+      category: "best-practices",
+      authorName: "Youri Pols",
+      updatedAtText: "9 januari 2026",
+      readingTimeMinutes: 5,
+      commentCount: 2,
+    },
+    {
+      id: "kb-8",
+      slug: "content-kalender-template",
+      title: "Content kalender template",
+      description:
+        "Het Notion template dat wij gebruiken om social en blog planning vast te leggen.",
+      discipline: "marketing",
+      category: "templates",
+      authorName: "Youri Pols",
+      updatedAtText: "3 januari 2026",
+      readingTimeMinutes: 2,
+      commentCount: 1,
+      isStale: true,
+    },
+    {
+      id: "kb-9",
+      slug: "pitch-opbouwen-in-30-minuten",
+      title: "Een pitch opbouwen in 30 minuten",
+      description:
+        "Van probleem tot call-to-action — het frame dat we voor elke klantpitch gebruiken.",
+      discipline: "account",
+      category: "best-practices",
+      authorName: "Youri Pols",
+      updatedAtText: "22 december 2025",
+      readingTimeMinutes: 4,
+      commentCount: 3,
+    },
+    {
+      id: "kb-10",
+      slug: "presentatietemplate-klanten",
+      title: "Presentatietemplate klanten",
+      description:
+        "Slides, spacing en iconografie voor een LiNC-branded klantpresentatie.",
+      discipline: "algemeen",
+      category: "templates",
+      authorName: "Youri Pols",
+      updatedAtText: "10 december 2025",
+      readingTimeMinutes: 3,
+      commentCount: 0,
+    },
+    {
+      id: "kb-11",
+      slug: "verlofbeleid-2026",
+      title: "Verlofbeleid 2026",
+      description:
+        "Hoe je verlof aanvraagt, wachttijden en vakantie-uren opbouwt in 2026.",
+      discipline: "algemeen",
+      category: "werkprocessen",
+      authorName: "Youri Pols",
+      updatedAtText: "1 december 2025",
+      readingTimeMinutes: 3,
+      commentCount: 6,
+    },
+  ];
+}

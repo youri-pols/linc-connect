@@ -50,7 +50,7 @@ export function MobileMenu({ userName, userPhoto, showWriteArticle, onNavigate }
         <Link
           href="/kennisbank/nieuw"
           onClick={onNavigate}
-          className="cursor-pointer flex items-center justify-center gap-1.5 bg-black border border-black rounded-md px-3 py-2 hover:bg-black/75 transition-colors"
+          className="cursor-pointer flex items-center justify-center gap-1.5 bg-black border border-black rounded-md px-3 py-2 hover:bg-purple hover:border-purple transition-colors"
         >
           <span className="icon text-white">add_2</span>
           <span className="text-xs text-white">Schrijf een artikel</span>

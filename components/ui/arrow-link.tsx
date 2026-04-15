@@ -22,6 +22,7 @@ interface ArrowLinkProps {
 const gapClass: Record<AnimatedArrowSize, string> = {
   md: "gap-2",
   sm: "gap-1",
+  xs: "gap-1.5",
 };
 
 export function ArrowLink({ href, className, children, size = "md" }: ArrowLinkProps) {

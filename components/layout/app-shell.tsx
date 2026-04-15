@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { SidebarNav } from "./sidebar-nav";
 import { TopBar } from "./top-bar";
 import { MobileMenu } from "./mobile-menu";
-
-type Role = "nieuw" | "ervaren" | "begeleider";
+import { RoleProvider, canWriteArticles, type Role } from "./role-context";
 
 interface AppShellProps {
   userName: string;
@@ -49,7 +48,7 @@ export function AppShell({ userName, userPhoto, children }: AppShellProps) {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  const showWriteArticle = role === "ervaren" || role === "begeleider";
+  const showWriteArticle = canWriteArticles(role);
 
   /*
    * The shell owns the viewport height. `<main>` is `overflow-hidden`
@@ -58,29 +57,31 @@ export function AppShell({ userName, userPhoto, children }: AppShellProps) {
    * while keeping the right panel static.
    */
   return (
-    <div className="flex h-screen">
-      <SidebarNav userName={userName} userPhoto={userPhoto} open={sidebarOpen} />
-      <div
-        className={`flex-1 flex flex-col min-w-0 min-h-0 transition-[margin] duration-300 ease-in-out ${
-          sidebarOpen ? "lg:ml-71" : "lg:ml-0"
-        }`}
-      >
-        <TopBar
-          onToggleSidebar={() => setSidebarOpen((o) => !o)}
-          onToggleMobileMenu={() => setMobileMenuOpen((o) => !o)}
-          mobileMenuOpen={mobileMenuOpen}
-          showWriteArticle={showWriteArticle}
-        />
-        {mobileMenuOpen && (
-          <MobileMenu
-            userName={userName}
-            userPhoto={userPhoto}
+    <RoleProvider role={role}>
+      <div className="flex h-screen">
+        <SidebarNav userName={userName} userPhoto={userPhoto} open={sidebarOpen} />
+        <div
+          className={`flex-1 flex flex-col min-w-0 min-h-0 transition-[margin] duration-300 ease-in-out ${
+            sidebarOpen ? "lg:ml-71" : "lg:ml-0"
+          }`}
+        >
+          <TopBar
+            onToggleSidebar={() => setSidebarOpen((o) => !o)}
+            onToggleMobileMenu={() => setMobileMenuOpen((o) => !o)}
+            mobileMenuOpen={mobileMenuOpen}
             showWriteArticle={showWriteArticle}
-            onNavigate={() => setMobileMenuOpen(false)}
           />
-        )}
-        <main className="flex-1 min-h-0 overflow-hidden">{children}</main>
+          {mobileMenuOpen && (
+            <MobileMenu
+              userName={userName}
+              userPhoto={userPhoto}
+              showWriteArticle={showWriteArticle}
+              onNavigate={() => setMobileMenuOpen(false)}
+            />
+          )}
+          <main className="flex-1 min-h-0 overflow-hidden">{children}</main>
+        </div>
       </div>
-    </div>
+    </RoleProvider>
   );
 }
