@@ -3,10 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { onboardingPath } from "@/lib/mock-data/my-path";
-import {
-  getPracticalArticlesForCategory,
-  practicalCategories,
-} from "@/lib/mock-data/practical";
+import { getPracticalArticlesForCategory, practicalCategories } from "@/lib/mock-data/practical";
+import { teamMembers } from "@/lib/mock-data/team-members";
 import { Logo } from "./logo";
 
 const pageTitles: Record<string, string> = {
@@ -35,31 +33,26 @@ function getBreadcrumbs(pathname: string): Breadcrumb[] {
   if (articleMatch) {
     const slug = articleMatch[1];
     const title = slug.replace(/-/g, " ").replace(/^./, (c) => c.toUpperCase());
-    return [
-      { label: "Kennisbank", href: "/kennisbank" },
-      { label: title },
-    ];
+    return [{ label: "Kennisbank", href: "/kennisbank" }, { label: title }];
   }
   const moduleMatch = pathname.match(/^\/mijn-pad\/([^/]+)\/([^/]+)$/);
   if (moduleMatch) {
     const [, phaseId, moduleId] = moduleMatch;
     const phase = onboardingPath.phases.find((p) => p.id === phaseId);
     const moduleItem = phase?.modules.find((m) => m.id === moduleId);
-    return [
-      { label: "Mijn pad", href: "/mijn-pad" },
-      { label: phase?.sectionTitle ?? phaseId, href: `/mijn-pad/${phaseId}` },
-      { label: moduleItem?.title ?? moduleId },
-    ];
+    return [{ label: "Mijn pad", href: "/mijn-pad" }, { label: phase?.sectionTitle ?? phaseId, href: `/mijn-pad/${phaseId}` }, { label: moduleItem?.title ?? moduleId }];
   }
-  const praktischArticleMatch = pathname.match(
-    /^\/praktisch\/([^/]+)\/([^/]+)$/,
-  );
+  const teamMemberMatch = pathname.match(/^\/team\/([^/]+)$/);
+  if (teamMemberMatch) {
+    const slug = teamMemberMatch[1];
+    const member = teamMembers.find((m) => m.slug === slug);
+    return [{ label: "Team", href: "/team" }, { label: member?.name ?? slug }];
+  }
+  const praktischArticleMatch = pathname.match(/^\/praktisch\/([^/]+)\/([^/]+)$/);
   if (praktischArticleMatch) {
     const [, categorySlug, articleSlug] = praktischArticleMatch;
     const category = practicalCategories.find((c) => c.slug === categorySlug);
-    const article = getPracticalArticlesForCategory(categorySlug).find(
-      (a) => a.slug === articleSlug,
-    );
+    const article = getPracticalArticlesForCategory(categorySlug).find((a) => a.slug === articleSlug);
     return [
       { label: "Praktische info", href: "/praktisch" },
       {
@@ -71,21 +64,13 @@ function getBreadcrumbs(pathname: string): Breadcrumb[] {
   }
   const praktischMatch = pathname.match(/^\/praktisch\/([^/]+)$/);
   if (praktischMatch) {
-    const category = practicalCategories.find(
-      (c) => c.slug === praktischMatch[1],
-    );
-    return [
-      { label: "Praktische info", href: "/praktisch" },
-      { label: category?.title ?? praktischMatch[1] },
-    ];
+    const category = practicalCategories.find((c) => c.slug === praktischMatch[1]);
+    return [{ label: "Praktische info", href: "/praktisch" }, { label: category?.title ?? praktischMatch[1] }];
   }
   const phaseMatch = pathname.match(/^\/mijn-pad\/([^/]+)$/);
   if (phaseMatch) {
     const phase = onboardingPath.phases.find((p) => p.id === phaseMatch[1]);
-    return [
-      { label: "Mijn pad", href: "/mijn-pad" },
-      { label: phase?.sectionTitle ?? phaseMatch[1] },
-    ];
+    return [{ label: "Mijn pad", href: "/mijn-pad" }, { label: phase?.sectionTitle ?? phaseMatch[1] }];
   }
   if (pageTitles[pathname]) return [{ label: pageTitles[pathname] }];
   const match = Object.keys(pageTitles).find((key) => pathname.startsWith(key + "/"));
@@ -142,18 +127,12 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
 
             {showWriteArticle &&
               (isCreateArticle ? (
-                <button
-                  type="button"
-                  className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
-                >
+                <button type="button" className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors">
                   <span className="icon text-white">arrow_upload_ready</span>
                   <span className="text-xs text-white">Publiceren</span>
                 </button>
               ) : (
-                <Link
-                  href="/kennisbank/nieuw"
-                  className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
-                >
+                <Link href="/kennisbank/nieuw" className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors">
                   <span className="icon text-white">add_2</span>
                   <span className="text-xs text-white">Schrijf een artikel</span>
                 </Link>
@@ -169,19 +148,12 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
         </Link>
         <div className="flex items-center gap-2">
           {isCreateArticle && showWriteArticle && (
-            <button
-              type="button"
-              className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
-            >
+            <button type="button" className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors">
               <span className="icon text-white">arrow_upload_ready</span>
               <span className="text-xs text-white">Publiceren</span>
             </button>
           )}
-          <button
-            onClick={onToggleMobileMenu}
-            className="cursor-pointer flex items-center justify-center size-10 rounded-lg text-black hover:bg-black/5 transition-colors"
-            aria-label="Toggle menu"
-          >
+          <button onClick={onToggleMobileMenu} className="cursor-pointer flex items-center justify-center size-10 rounded-lg text-black hover:bg-black/5 transition-colors" aria-label="Toggle menu">
             <span className="icon">{mobileMenuOpen ? "close" : "menu"}</span>
           </button>
         </div>

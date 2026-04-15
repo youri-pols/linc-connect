@@ -38,6 +38,33 @@ export interface TeamMember {
   /** Public `/images/…` path; falls back to coloured initials. */
   photoUrl?: string;
   phone?: string;
+  /** Google Chat handle shown in the profile contact section. */
+  chatHandle?: string;
+
+  /* ── Profile-only fields (used on /team/[slug]) ─────────── */
+
+  /** Current LiNC Connect XP. */
+  xp?: number;
+  /** Tier label ("Tier 1", "Tier 2", …). */
+  xpTier?: string;
+  /** XP needed to reach the next tier. */
+  xpTarget?: number;
+  /** Free-text about section. */
+  bio?: string;
+  /** `public/images/badge-*.webp` slugs the member has earned. */
+  earnedBadges?: ProfileBadge[];
+  publishedArticlesCount?: number;
+  answeredQuestionsCount?: number;
+  yearsAtLinc?: number;
+}
+
+export interface ProfileBadge {
+  /** Public `/images/…` path to the badge image. */
+  src: string;
+  /** Small caption shown under the badge. */
+  label: string;
+  /** XP awarded for earning this badge — shown below the label. */
+  xp?: number;
 }
 
 export const teamMembers: TeamMember[] = [
@@ -117,6 +144,35 @@ export const teamMembers: TeamMember[] = [
 
 export function getTeamMember(slug: string): TeamMember | undefined {
   return teamMembers.find((m) => m.slug === slug);
+}
+
+/*
+ * Default profile fields applied to any team member that doesn't
+ * declare them in the mock — so /team/[slug] always has stats,
+ * badges, and a bio to render.
+ */
+export const DEFAULT_PROFILE: Partial<TeamMember> = {
+  xp: 250,
+  xpTier: "Tier 17",
+  xpTarget: 1500,
+  bio: "Lorem ipsum dolor sit amet consectetur. Id malesuada faucibus in elit. Bibendum ullamcorper ut sed urna id magna scelerisque eros sed. Bibendum quisque tristique sed tortor ultrices fermentum volutpat amet.",
+  earnedBadges: [
+    { src: "/images/badge-fase-1.webp", label: "Oriëntatie voltooid", xp: 1000 },
+    { src: "/images/badge-fase-2.webp", label: "Rolspecifieke basis", xp: 1250 },
+    { src: "/images/badge-eerste-artikel.webp", label: "Eerste artikel", xp: 100 },
+    { src: "/images/badge-10-vragen-antwoord.webp", label: "10 vragen beantwoord", xp: 250 },
+    { src: "/images/badge-fase-3.webp", label: "Zelfstandig werken", xp: 1500 },
+    { src: "/images/badge-alle-fases-voltooid.webp", label: "Volledig ingewerkt", xp: 1500 },
+  ],
+  publishedArticlesCount: 6,
+  answeredQuestionsCount: 34,
+  yearsAtLinc: 5,
+};
+
+export function getTeamMemberWithProfile(slug: string): TeamMember | undefined {
+  const match = getTeamMember(slug);
+  if (!match) return undefined;
+  return { ...DEFAULT_PROFILE, ...match };
 }
 
 /*

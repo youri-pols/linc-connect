@@ -112,7 +112,7 @@ function TaskRow({ task, isLast, onToggle }: TaskRowProps) {
             </svg>
           </span>
         ) : state === "active" ? (
-          <span className="block size-4.25rounded-full border border-purple" />
+          <span className="block size-4.25 rounded-full border border-purple" />
         ) : (
           <span className="block size-4.25 rounded-full border border-black/15 hover:border-black/40 transition-colors" />
         )}

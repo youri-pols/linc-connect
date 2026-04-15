@@ -69,6 +69,7 @@ html {
   --text-13: 0.8125rem; /* 13px */
   --text-h1: 2.5625rem; /* 41px — beginner home headline */
   --text-h2: 1.8125rem; /* 29px — secondary page headings */
+  --text-h2-s: 1.4375rem; /* 23px — card titles, tertiary headings */
 
   /* 120% line-height for dense card labels */
   --leading-card: 1.2;
@@ -275,11 +276,7 @@ body {
    * paint the glyphs with the full-intensity gradient.
    */
   .xp-pill-gradient-bg {
-    background: linear-gradient(
-      219deg,
-      rgba(113, 97, 239, 0.1) 28%,
-      rgba(236, 115, 87, 0.1) 72%
-    );
+    background: linear-gradient(219deg, rgba(113, 97, 239, 0.1) 28%, rgba(236, 115, 87, 0.1) 72%);
   }
   .xp-pill-gradient-text {
     background: linear-gradient(214deg, var(--purple) 28%, var(--orange) 72%);
