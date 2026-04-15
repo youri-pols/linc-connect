@@ -14,6 +14,16 @@ function LoginContent() {
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
+        // calendar.freebusy → read when a colleague is busy so we
+        //                     can suggest open slots on their
+        //                     calendar from the team card modal.
+        // calendar.events   → create an event + send the invite
+        //                     straight from the scheduling modal.
+        scopes: "https://www.googleapis.com/auth/calendar.freebusy https://www.googleapis.com/auth/calendar.events",
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
       },
     });
   };
