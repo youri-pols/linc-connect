@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { onboardingPath } from "@/lib/mock-data/my-path";
 import { Logo } from "./logo";
 
 const pageTitles: Record<string, string> = {
@@ -33,6 +34,25 @@ function getBreadcrumbs(pathname: string): Breadcrumb[] {
     return [
       { label: "Kennisbank", href: "/kennisbank" },
       { label: title },
+    ];
+  }
+  const moduleMatch = pathname.match(/^\/mijn-pad\/([^/]+)\/([^/]+)$/);
+  if (moduleMatch) {
+    const [, phaseId, moduleId] = moduleMatch;
+    const phase = onboardingPath.phases.find((p) => p.id === phaseId);
+    const moduleItem = phase?.modules.find((m) => m.id === moduleId);
+    return [
+      { label: "Mijn pad", href: "/mijn-pad" },
+      { label: phase?.sectionTitle ?? phaseId, href: `/mijn-pad/${phaseId}` },
+      { label: moduleItem?.title ?? moduleId },
+    ];
+  }
+  const phaseMatch = pathname.match(/^\/mijn-pad\/([^/]+)$/);
+  if (phaseMatch) {
+    const phase = onboardingPath.phases.find((p) => p.id === phaseMatch[1]);
+    return [
+      { label: "Mijn pad", href: "/mijn-pad" },
+      { label: phase?.sectionTitle ?? phaseMatch[1] },
     ];
   }
   if (pageTitles[pathname]) return [{ label: pageTitles[pathname] }];

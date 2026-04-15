@@ -93,13 +93,13 @@ export function ModuleRow({ module, isLast }: ModuleRowProps) {
         {/* XP reward pill — green for completed, gradient for others */}
         {state === "completed" ? (
           <div className="bg-green/10 rounded-sm px-1.5 py-1 flex items-center justify-center">
-            <span className="text-body text-2xs text-green leading-none">
+            <span className="text-body text-2xs text-green leading-[1.1]">
               +{xpReward} XP
             </span>
           </div>
         ) : (
           <div className="xp-pill-gradient-bg rounded-sm px-1.5 py-1 flex items-center justify-center">
-            <span className="xp-pill-gradient-text text-body text-2xs leading-none">
+            <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">
               +{xpReward} XP
             </span>
           </div>

@@ -188,6 +188,87 @@ body {
   }
 
   /*
+   * Phase-complete modal entry animations. Backdrop fades in, card
+   * springs in with a small overshoot, badge scales in with a bit
+   * of rotation for personality, and the "+ XP toegevoegd" label
+   * slips in last so the progress-bar fill reads as the source of
+   * that number.
+   */
+  @keyframes phase-modal-backdrop-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .phase-modal-backdrop {
+    animation: phase-modal-backdrop-in 200ms ease-out both;
+  }
+  @keyframes phase-modal-card-in {
+    from {
+      opacity: 0;
+      transform: scale(0.92) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  .phase-modal-card {
+    animation: phase-modal-card-in 350ms cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+  }
+  @keyframes phase-modal-badge-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.5) rotate(-20deg);
+    }
+    60% {
+      transform: scale(1.1) rotate(8deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0);
+    }
+  }
+  .phase-modal-badge {
+    animation: phase-modal-badge-in 700ms cubic-bezier(0.2, 0.9, 0.3, 1.2) 150ms both;
+  }
+  @keyframes phase-modal-xp-added-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .phase-modal-xp-added {
+    animation: phase-modal-xp-added-in 400ms ease-out 1200ms both;
+  }
+
+  /*
+   * Confetti entry animation for the celebration image. Scales
+   * up from 0.7 to its final size once and fades in — no
+   * overshoot / settle back, no fade out. The image holds its
+   * final state for the lifetime of the modal.
+   */
+  @keyframes confetti-burst {
+    0% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .confetti-burst {
+    animation: confetti-burst 700ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  }
+
+  /*
    * XP reward pill with a purple-to-orange gradient, used on
    * active and locked modules in Mijn Pad. The background is a
    * low-opacity gradient and the text uses background-clip to

@@ -86,30 +86,10 @@ export function WysiwygEditor({ onChange }: WysiwygEditorProps) {
         </ToolbarGroup>
         <Divider />
         <ToolbarGroup>
-          <ToolbarTextButton
-            label="B"
-            bold
-            active={active.bold}
-            onClick={() => exec("bold")}
-          />
-          <ToolbarTextButton
-            label="U"
-            underline
-            active={active.underline}
-            onClick={() => exec("underline")}
-          />
-          <ToolbarTextButton
-            label="I"
-            italic
-            active={active.italic}
-            onClick={() => exec("italic")}
-          />
-          <ToolbarTextButton
-            label="S"
-            strike
-            active={active.strikethrough}
-            onClick={() => exec("strikethrough")}
-          />
+          <ToolbarTextButton label="B" bold active={active.bold} onClick={() => exec("bold")} />
+          <ToolbarTextButton label="U" underline active={active.underline} onClick={() => exec("underline")} />
+          <ToolbarTextButton label="I" italic active={active.italic} onClick={() => exec("italic")} />
+          <ToolbarTextButton label="S" strike active={active.strikethrough} onClick={() => exec("strikethrough")} />
         </ToolbarGroup>
         <Divider />
         <ToolbarGroup>
@@ -125,15 +105,7 @@ export function WysiwygEditor({ onChange }: WysiwygEditorProps) {
       </div>
 
       {/* Editor surface */}
-      <div
-        ref={editorRef}
-        contentEditable
-        onInput={emitChange}
-        onBlur={emitChange}
-        suppressContentEditableWarning
-        data-placeholder="Typ hier de inhoud van je artikel..."
-        className="wysiwyg-content bg-white border border-black/15 rounded-lg px-6 py-5 min-h-72 text-body text-sm text-black leading-relaxed outline-none focus:border-purple transition-colors"
-      />
+      <div ref={editorRef} contentEditable onInput={emitChange} onBlur={emitChange} suppressContentEditableWarning data-placeholder="Typ hier de inhoud van je artikel..." className="wysiwyg-content bg-white border border-black/15 rounded-lg px-6 py-5 min-h-72 text-body text-sm text-black leading-relaxed outline-none focus:border-purple transition-colors" />
     </div>
   );
 }
@@ -145,69 +117,22 @@ function ToolbarGroup({ children }: { children: React.ReactNode }) {
 }
 
 function Divider() {
-  return <div className="w-px h-[18px] bg-black/15 shrink-0" />;
+  return <div className="w-px h-4.5 bg-black/15 shrink-0" />;
 }
 
-function ToolbarTextButton({
-  label,
-  active,
-  bold,
-  italic,
-  underline,
-  strike,
-  onClick,
-}: {
-  label: string;
-  active?: boolean;
-  bold?: boolean;
-  italic?: boolean;
-  underline?: boolean;
-  strike?: boolean;
-  onClick: () => void;
-}) {
-  const decoration = [
-    underline ? "underline" : "",
-    strike ? "line-through" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+function ToolbarTextButton({ label, active, bold, italic, underline, strike, onClick }: { label: string; active?: boolean; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; onClick: () => void }) {
+  const decoration = [underline ? "underline" : "", strike ? "line-through" : ""].filter(Boolean).join(" ");
 
   return (
-    <button
-      type="button"
-      onMouseDown={(e) => e.preventDefault()}
-      onClick={onClick}
-      className={`flex items-center justify-center h-7 w-7.5 rounded-md text-xs transition-colors cursor-pointer ${
-        active ? "bg-purple/10 text-purple" : "text-black hover:bg-black/5"
-      }`}
-    >
-      <span
-        className={`${bold || active ? "font-bold" : "font-normal"} ${italic ? "italic" : ""} ${decoration}`}
-      >
-        {label}
-      </span>
+    <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={onClick} className={`flex items-center justify-center h-7 w-7.5 rounded-md text-xs transition-colors cursor-pointer ${active ? "bg-purple/10 text-purple" : "text-black hover:bg-black/5"}`}>
+      <span className={`${bold || active ? "font-bold" : "font-normal"} ${italic ? "italic" : ""} ${decoration}`}>{label}</span>
     </button>
   );
 }
 
-function ToolbarIconButton({
-  icon,
-  active,
-  onClick,
-}: {
-  icon: string;
-  active?: boolean;
-  onClick: () => void;
-}) {
+function ToolbarIconButton({ icon, active, onClick }: { icon: string; active?: boolean; onClick: () => void }) {
   return (
-    <button
-      type="button"
-      onMouseDown={(e) => e.preventDefault()}
-      onClick={onClick}
-      className={`flex items-center justify-center h-7 w-7.5 rounded-md transition-colors cursor-pointer ${
-        active ? "bg-purple/10 text-purple" : "text-black hover:bg-black/5"
-      }`}
-    >
+    <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={onClick} className={`flex items-center justify-center h-7 w-7.5 rounded-md transition-colors cursor-pointer ${active ? "bg-purple/10 text-purple" : "text-black hover:bg-black/5"}`}>
       <span className="icon">{icon}</span>
     </button>
   );

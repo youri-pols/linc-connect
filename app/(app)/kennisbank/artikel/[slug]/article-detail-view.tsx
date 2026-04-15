@@ -168,7 +168,7 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
         {/* Back button */}
         <Link
           href="/kennisbank"
-          className="self-start flex items-center gap-1.5 border border-black/10 rounded-md px-3 py-1.5 text-body text-xs text-black hover:bg-black/5 transition-colors"
+          className="self-start flex items-center gap-1.5 border border-black/10 rounded-md px-3 py-1.5 text-body text-xs text-black hover:bg-black hover:text-white hover:border-black transition-colors"
         >
           <span className="icon">arrow_back</span>
           Terug naar Kennisbank
