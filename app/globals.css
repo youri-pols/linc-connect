@@ -186,4 +186,24 @@ body {
     color: var(--purple);
     text-decoration: underline;
   }
+
+  /*
+   * XP reward pill with a purple-to-orange gradient, used on
+   * active and locked modules in Mijn Pad. The background is a
+   * low-opacity gradient and the text uses background-clip to
+   * paint the glyphs with the full-intensity gradient.
+   */
+  .xp-pill-gradient-bg {
+    background: linear-gradient(
+      219deg,
+      rgba(113, 97, 239, 0.1) 28%,
+      rgba(236, 115, 87, 0.1) 72%
+    );
+  }
+  .xp-pill-gradient-text {
+    background: linear-gradient(214deg, var(--purple) 28%, var(--orange) 72%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }

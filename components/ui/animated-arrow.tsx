@@ -30,10 +30,16 @@ interface AnimatedArrowProps {
  * (text-white, text-purple, ...) is passed in; the glyphs inherit
  * it via `currentColor` (SVG) or font colour (Material Symbols).
  */
+/*
+ * Wrappers are deliberately a few pixels wider than the glyph so
+ * there's natural whitespace around the centred arrow. When the
+ * wrapper slides by its full width on hover the whitespace becomes
+ * the visual gap between the exiting and entering glyphs.
+ */
 const sizeClass: Record<AnimatedArrowSize, string> = {
-  md: "size-4",
-  sm: "w-1.5 h-4",
-  xs: "size-2.5",
+  md: "size-5",
+  sm: "w-2 h-4",
+  xs: "size-4",
 };
 
 function ArrowGlyph({
