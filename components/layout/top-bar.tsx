@@ -23,6 +23,9 @@ interface Breadcrumb {
  * from slug); everything else is a single segment.
  */
 function getBreadcrumbs(pathname: string): Breadcrumb[] {
+  if (pathname === "/kennisbank/nieuw") {
+    return [{ label: "Kennisbank", href: "/kennisbank" }, { label: "Nieuw artikel" }];
+  }
   const articleMatch = pathname.match(/^\/kennisbank\/artikel\/(.+)/);
   if (articleMatch) {
     const slug = articleMatch[1];
@@ -47,6 +50,7 @@ interface TopBarProps {
 export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, showWriteArticle }: TopBarProps) {
   const pathname = usePathname();
   const breadcrumbs = getBreadcrumbs(pathname);
+  const isCreateArticle = pathname === "/kennisbank/nieuw";
 
   return (
     <header className="sticky top-0 z-30 bg-white border-b border-black/15 flex items-stretch h-14">
@@ -84,12 +88,24 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
               <span className="text-xs text-black/50">Type om te zoeken...</span>
             </button>
 
-            {showWriteArticle && (
-              <Link href="/kennisbank/nieuw" className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors">
-                <span className="icon text-white">add_2</span>
-                <span className="text-xs text-white">Schrijf een artikel</span>
-              </Link>
-            )}
+            {showWriteArticle &&
+              (isCreateArticle ? (
+                <button
+                  type="button"
+                  className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
+                >
+                  <span className="icon text-white">arrow_upload_ready</span>
+                  <span className="text-xs text-white">Publiceren</span>
+                </button>
+              ) : (
+                <Link
+                  href="/kennisbank/nieuw"
+                  className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
+                >
+                  <span className="icon text-white">add_2</span>
+                  <span className="text-xs text-white">Schrijf een artikel</span>
+                </Link>
+              ))}
           </div>
         </div>
       </div>
@@ -99,9 +115,24 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
         <Link href="/home" className="flex items-center text-black">
           <Logo />
         </Link>
-        <button onClick={onToggleMobileMenu} className="cursor-pointer flex items-center justify-center size-10 rounded-lg text-black hover:bg-black/5 transition-colors" aria-label="Toggle menu">
-          <span className="icon">{mobileMenuOpen ? "close" : "menu"}</span>
-        </button>
+        <div className="flex items-center gap-2">
+          {isCreateArticle && showWriteArticle && (
+            <button
+              type="button"
+              className="cursor-pointer flex items-center gap-1.5 bg-black border border-black rounded-md px-3 py-1.5 hover:bg-purple hover:border-purple transition-colors"
+            >
+              <span className="icon text-white">arrow_upload_ready</span>
+              <span className="text-xs text-white">Publiceren</span>
+            </button>
+          )}
+          <button
+            onClick={onToggleMobileMenu}
+            className="cursor-pointer flex items-center justify-center size-10 rounded-lg text-black hover:bg-black/5 transition-colors"
+            aria-label="Toggle menu"
+          >
+            <span className="icon">{mobileMenuOpen ? "close" : "menu"}</span>
+          </button>
+        </div>
       </div>
     </header>
   );

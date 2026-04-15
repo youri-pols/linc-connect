@@ -1,3 +1,5 @@
+import { CreateArticleView } from "./create-article-view";
+
 export default function NieuwArtikelPage() {
-  return <div />;
+  return <CreateArticleView />;
 }
