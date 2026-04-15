@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { onboardingPath } from "@/lib/mock-data/my-path";
+import {
+  getPracticalArticlesForCategory,
+  practicalCategories,
+} from "@/lib/mock-data/practical";
 import { Logo } from "./logo";
 
 const pageTitles: Record<string, string> = {
@@ -45,6 +49,34 @@ function getBreadcrumbs(pathname: string): Breadcrumb[] {
       { label: "Mijn pad", href: "/mijn-pad" },
       { label: phase?.sectionTitle ?? phaseId, href: `/mijn-pad/${phaseId}` },
       { label: moduleItem?.title ?? moduleId },
+    ];
+  }
+  const praktischArticleMatch = pathname.match(
+    /^\/praktisch\/([^/]+)\/([^/]+)$/,
+  );
+  if (praktischArticleMatch) {
+    const [, categorySlug, articleSlug] = praktischArticleMatch;
+    const category = practicalCategories.find((c) => c.slug === categorySlug);
+    const article = getPracticalArticlesForCategory(categorySlug).find(
+      (a) => a.slug === articleSlug,
+    );
+    return [
+      { label: "Praktische info", href: "/praktisch" },
+      {
+        label: category?.title ?? categorySlug,
+        href: `/praktisch/${categorySlug}`,
+      },
+      { label: article?.title ?? articleSlug },
+    ];
+  }
+  const praktischMatch = pathname.match(/^\/praktisch\/([^/]+)$/);
+  if (praktischMatch) {
+    const category = practicalCategories.find(
+      (c) => c.slug === praktischMatch[1],
+    );
+    return [
+      { label: "Praktische info", href: "/praktisch" },
+      { label: category?.title ?? praktischMatch[1] },
     ];
   }
   const phaseMatch = pathname.match(/^\/mijn-pad\/([^/]+)$/);

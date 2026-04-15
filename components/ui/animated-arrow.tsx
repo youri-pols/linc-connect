@@ -38,7 +38,7 @@ interface AnimatedArrowProps {
  */
 const sizeClass: Record<AnimatedArrowSize, string> = {
   md: "size-5",
-  sm: "w-2 h-4",
+  sm: "w-3 h-4",
   xs: "size-4",
 };
 
@@ -50,7 +50,20 @@ function ArrowGlyph({
   glyph: AnimatedArrowGlyph;
 }) {
   if (size === "sm" || glyph === "chevron") {
-    return <span className="icon block">chevron_right</span>;
+    return (
+      <svg
+        viewBox="0 0 6 9"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="block w-1.5"
+      >
+        <path
+          d="M0.353516 8.52021L4.43685 4.43688L0.353516 0.353546"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+        />
+      </svg>
+    );
   }
 
   if (size === "xs") {
