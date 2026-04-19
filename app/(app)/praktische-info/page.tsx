@@ -26,7 +26,7 @@ export default function PraktischPage() {
 
         <div className="flex flex-col bg-white border border-black/15 rounded-lg shadow-card overflow-hidden">
           {regular.map((category, i) => (
-            <CategoryRow key={category.slug} href={`/praktisch/${category.slug}`} icon={category.icon} title={category.title} description={category.description} isLast={i === regular.length - 1} />
+            <CategoryRow key={category.slug} href={`/praktische-info/${category.slug}`} icon={category.icon} title={category.title} description={category.description} isLast={i === regular.length - 1} />
           ))}
         </div>
       </div>

@@ -44,12 +44,18 @@ export function UserMenu({ userName, userPhoto, direction = "up" }: UserMenuProp
 
   return (
     <div ref={ref} className="relative">
-      <button onClick={() => setOpen((o) => !o)} className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-black/5 transition-colors">
+      <button
+        type="button"
+        aria-label={`Accountmenu van ${userName}`}
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-black/5 transition-colors"
+      >
         <div className="flex items-center gap-2 min-w-0">
-          {userPhoto ? <Image src={userPhoto} alt={userName} width={40} height={40} className="size-10 rounded-lg object-cover shrink-0" /> : <div className="size-10 rounded-lg bg-orange flex items-center justify-center text-white text-nav-user shrink-0">{initials}</div>}
+          {userPhoto ? <Image src={userPhoto} alt="" width={40} height={40} className="size-10 rounded-lg object-cover shrink-0" /> : <div aria-hidden className="size-10 rounded-lg bg-orange flex items-center justify-center text-white text-nav-user shrink-0">{initials}</div>}
           <span className="text-nav-user truncate">{userName}</span>
         </div>
-        <span className="icon text-black/60 shrink-0">more_vert</span>
+        <span aria-hidden className="icon text-black/60 shrink-0">more_vert</span>
       </button>
 
       {open && (

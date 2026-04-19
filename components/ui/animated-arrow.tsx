@@ -108,6 +108,7 @@ export function AnimatedArrow({
 }: AnimatedArrowProps) {
   return (
     <span
+      aria-hidden
       className={`relative block overflow-hidden shrink-0 ${sizeClass[size]} ${className}`}
     >
       <span className="absolute inset-0 flex items-center justify-center transition-transform duration-200 ease-out group-hover:translate-x-full">

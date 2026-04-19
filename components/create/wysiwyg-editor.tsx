@@ -93,19 +93,19 @@ export function WysiwygEditor({ onChange }: WysiwygEditorProps) {
         </ToolbarGroup>
         <Divider />
         <ToolbarGroup>
-          <ToolbarIconButton icon="link" onClick={link} />
-          <ToolbarIconButton icon="image" onClick={image} />
+          <ToolbarIconButton icon="link" label="Link invoegen" onClick={link} />
+          <ToolbarIconButton icon="image" label="Afbeelding invoegen" onClick={image} />
           <ToolbarTextButton label="</>" onClick={code} />
         </ToolbarGroup>
         <Divider />
         <ToolbarGroup>
-          <ToolbarIconButton icon="undo" onClick={undo} />
-          <ToolbarIconButton icon="redo" onClick={redo} />
+          <ToolbarIconButton icon="undo" label="Ongedaan maken" onClick={undo} />
+          <ToolbarIconButton icon="redo" label="Opnieuw uitvoeren" onClick={redo} />
         </ToolbarGroup>
       </div>
 
       {/* Editor surface */}
-      <div ref={editorRef} contentEditable onInput={emitChange} onBlur={emitChange} suppressContentEditableWarning data-placeholder="Typ hier de inhoud van je artikel..." className="wysiwyg-content bg-white border border-black/15 rounded-lg px-6 py-5 min-h-72 text-body text-sm text-black leading-relaxed outline-none focus:border-purple transition-colors" />
+      <div ref={editorRef} contentEditable role="textbox" aria-multiline="true" aria-label="Artikelinhoud" onInput={emitChange} onBlur={emitChange} suppressContentEditableWarning data-placeholder="Typ hier de inhoud van je artikel..." className="wysiwyg-content bg-white border border-black/15 rounded-lg px-6 py-5 min-h-72 text-body text-sm text-black leading-relaxed outline-none focus:border-purple transition-colors" />
     </div>
   );
 }
@@ -130,10 +130,10 @@ function ToolbarTextButton({ label, active, bold, italic, underline, strike, onC
   );
 }
 
-function ToolbarIconButton({ icon, active, onClick }: { icon: string; active?: boolean; onClick: () => void }) {
+function ToolbarIconButton({ icon, label, active, onClick }: { icon: string; label: string; active?: boolean; onClick: () => void }) {
   return (
-    <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={onClick} className={`flex items-center justify-center h-7 w-7.5 rounded-md transition-colors cursor-pointer ${active ? "bg-purple/10 text-purple" : "text-black hover:bg-black/5"}`}>
-      <span className="icon">{icon}</span>
+    <button type="button" aria-label={label} onMouseDown={(e) => e.preventDefault()} onClick={onClick} className={`flex items-center justify-center h-7 w-7.5 rounded-md transition-colors cursor-pointer ${active ? "bg-purple/10 text-purple" : "text-black hover:bg-black/5"}`}>
+      <span aria-hidden className="icon">{icon}</span>
     </button>
   );
 }

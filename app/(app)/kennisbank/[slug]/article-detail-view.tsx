@@ -28,26 +28,10 @@ const CATEGORY_LABEL: Record<KnowledgeCategory, string> = {
 
 /* ── Sub-components ───────────────────────────────────────── */
 
-function Avatar({
-  src,
-  alt,
-  size = 24,
-}: {
-  src?: string;
-  alt: string;
-  size?: 24 | 32 | 40;
-}) {
+function Avatar({ src, alt, size = 24 }: { src?: string; alt: string; size?: 24 | 32 | 40 }) {
   const sizeClass = size === 40 ? "size-10" : size === 32 ? "size-8" : "size-6";
   if (src) {
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        width={size}
-        height={size}
-        className={`${sizeClass} rounded-full object-cover shrink-0`}
-      />
-    );
+    return <Image src={src} alt={alt} width={size} height={size} className={`${sizeClass} rounded-full object-cover shrink-0`} />;
   }
   return <div className={`${sizeClass} rounded-full bg-purple shrink-0`} />;
 }
@@ -59,17 +43,8 @@ function Avatar({
  */
 function StaticArrow({ className = "" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 10 10"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={`block w-2.5 h-2.5 shrink-0 ${className}`}
-    >
-      <path
-        d="M5.8335 7.91659L8.75016 4.99992L5.8335 2.08325"
-        stroke="currentColor"
-        strokeMiterlimit="10"
-      />
+    <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" className={`block w-2.5 h-2.5 shrink-0 ${className}`}>
+      <path d="M5.8335 7.91659L8.75016 4.99992L5.8335 2.08325" stroke="currentColor" strokeMiterlimit="10" />
       <path d="M8.63102 5H0.714355" stroke="currentColor" strokeMiterlimit="10" />
     </svg>
   );
@@ -84,15 +59,7 @@ function StaticArrow({ className = "" }: { className?: string }) {
  * matching the Figma where the entire answer compose flow lives in
  * the same dashed container.
  */
-function ThreadRow({
-  thread,
-  isOwner,
-  photoUrl,
-}: {
-  thread: QAThread;
-  isOwner: boolean;
-  photoUrl: string;
-}) {
+function ThreadRow({ thread, isOwner, photoUrl }: { thread: QAThread; isOwner: boolean; photoUrl: string }) {
   const photo = thread.authorPhotoUrl || photoUrl;
 
   return (
@@ -108,11 +75,7 @@ function ThreadRow({
             </p>
           </div>
           {isOwner && !thread.answer && (
-            <ArrowLink
-              href="#qa-form"
-              size="sm"
-              className="text-purple font-display font-semibold text-xs"
-            >
+            <ArrowLink href="#qa-form" size="sm" className="text-purple font-display font-semibold text-xs">
               Beantwoord deze vraag
             </ArrowLink>
           )}
@@ -121,19 +84,10 @@ function ThreadRow({
 
       {/* Owner: answer compose form — only the label/input/submit in the dashed card */}
       {isOwner && !thread.answer && (
-        <div
-          id="qa-form"
-          className="bg-white border border-dashed border-black/15 rounded-lg shadow-card p-4 flex flex-col gap-2 scroll-mt-20"
-        >
+        <div id="qa-form" className="bg-white border border-dashed border-black/15 rounded-lg shadow-card p-4 flex flex-col gap-2 scroll-mt-20">
           <p className="text-body text-13 font-medium">Beantwoord de vraag op je artikel</p>
-          <textarea
-            placeholder="Typ je antwoord"
-            className="text-body text-xs border border-black/10 rounded-md px-3 pt-3 pb-14 resize-none placeholder:text-black/50 bg-white focus:border-purple outline-none transition-colors"
-          />
-          <button
-            type="button"
-            className="self-start flex items-center gap-1.5 bg-black text-white text-xs rounded-md px-3 py-1.5 hover:bg-purple transition-colors cursor-pointer"
-          >
+          <textarea aria-label="Typ je antwoord op de vraag" placeholder="Typ je antwoord" className="text-body text-xs border border-black/10 rounded-md px-3 pt-3 pb-14 resize-none placeholder:text-black/50 bg-white focus:border-purple outline-none transition-colors" />
+          <button type="button" className="self-start flex items-center gap-1.5 bg-black text-white text-xs rounded-md px-3 py-1.5 hover:bg-purple transition-colors cursor-pointer">
             <span className="icon">add_2</span>
             Antwoord plaatsen
           </button>
@@ -164,12 +118,9 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
 
   return (
     <div className="h-full overflow-y-auto scroll-smooth">
-      <div className="max-w-3xl mx-auto p-4 lg:p-8 flex flex-col gap-10">
+      <div className="max-w-2xl mx-auto p-4 lg:p-8 flex flex-col gap-10">
         {/* Back button */}
-        <Link
-          href="/kennisbank"
-          className="self-start flex items-center gap-1.5 border border-black/10 rounded-md px-3 py-1.5 text-body text-xs text-black hover:bg-black hover:text-white hover:border-black transition-colors"
-        >
+        <Link href="/kennisbank" className="self-start flex items-center gap-1.5 border border-black/10 rounded-md px-3 py-1.5 text-body text-xs text-black hover:bg-black hover:text-white hover:border-black transition-colors">
           <span className="icon">arrow_back</span>
           Terug naar Kennisbank
         </Link>
@@ -189,9 +140,7 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
               <div className="flex items-center gap-3">
                 <p className="text-body text-xs text-black/80">{article.authorName}</p>
                 <div className="size-1 rounded-full bg-black/60 shrink-0" />
-                <p className="text-body text-xs text-black/60">
-                  Bijgewerkt {article.updatedAtText}
-                </p>
+                <p className="text-body text-xs text-black/60">Bijgewerkt {article.updatedAtText}</p>
               </div>
             </div>
             <p className="text-body text-xs text-black/60 flex items-center gap-1">
@@ -213,9 +162,7 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
         <div className="flex flex-col gap-8">
           {article.sections.map((section, i) => (
             <div key={i} className="flex flex-col gap-3">
-              {section.heading && (
-                <h2 className="font-display font-medium text-base">{section.heading}</h2>
-              )}
+              {section.heading && <h2 className="font-display font-medium text-base">{section.heading}</h2>}
               <p className="text-body text-sm text-black leading-relaxed">{section.body}</p>
             </div>
           ))}
@@ -248,9 +195,7 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
         {/* Q&A section */}
         <div id="qa-section" className="flex flex-col gap-4 border-t border-black/15 pt-6 scroll-mt-20">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="font-display font-medium text-sm">
-              Vragen & antwoorden ({totalQA})
-            </h2>
+            <h2 className="font-display font-medium text-sm">Vragen & antwoorden ({totalQA})</h2>
             {!isOwner && (
               <button className="flex items-center gap-1.5 bg-black text-white text-xs rounded-md px-3 py-1.5 hover:bg-purple transition-colors cursor-pointer">
                 <span className="icon">add_2</span>
@@ -263,30 +208,16 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
             {/* Threads in one shared card */}
             <div className="bg-white border border-black/15 rounded-lg shadow-card overflow-hidden divide-y divide-black/15">
               {article.threads.map((thread) => (
-                <ThreadRow
-                  key={thread.id}
-                  thread={thread}
-                  isOwner={isOwner}
-                  photoUrl={userPhotoUrl}
-                />
+                <ThreadRow key={thread.id} thread={thread} isOwner={isOwner} photoUrl={userPhotoUrl} />
               ))}
             </div>
 
             {/* Reader: ask question form — separate dashed-border card */}
             {!isOwner && (
-              <div
-                id="qa-form"
-                className="bg-white border border-dashed border-black/15 rounded-lg shadow-card p-4 flex flex-col gap-2 scroll-mt-20"
-              >
+              <div id="qa-form" className="bg-white border border-dashed border-black/15 rounded-lg shadow-card p-4 flex flex-col gap-2 scroll-mt-20">
                 <p className="text-body text-13 font-medium">Stel een vraag over dit artikel</p>
-                <textarea
-                  placeholder="Typ je vraag"
-                  className="text-body text-xs border border-black/10 rounded-md px-3 pt-3 pb-14 resize-none placeholder:text-black/50 bg-white focus:border-purple outline-none transition-colors"
-                />
-                <button
-                  type="button"
-                  className="self-start flex items-center gap-1.5 bg-black text-white text-xs rounded-md px-3 py-1.5 hover:bg-purple transition-colors cursor-pointer"
-                >
+                <textarea aria-label="Typ je vraag over dit artikel" placeholder="Typ je vraag" className="text-body text-xs border border-black/10 rounded-md px-3 pt-3 pb-14 resize-none placeholder:text-black/50 bg-white focus:border-purple outline-none transition-colors" />
+                <button type="button" className="self-start flex items-center gap-1.5 bg-black text-white text-xs rounded-md px-3 py-1.5 hover:bg-purple transition-colors cursor-pointer">
                   <span className="icon">add_2</span>
                   Vraag plaatsen
                 </button>
@@ -299,21 +230,14 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
         <div className="flex flex-col gap-4 border-t border-black/15 pt-6">
           <div className="flex items-center justify-between gap-4">
             <h2 className="font-display font-medium text-sm">Gerelateerde artikelen</h2>
-            <Link
-              href="/kennisbank"
-              className="group flex items-center gap-2 bg-black text-white text-xs rounded-md px-3 py-1.5 hover:bg-purple transition-colors"
-            >
+            <Link href="/kennisbank" className="group flex items-center gap-2 bg-black text-white text-xs rounded-md px-3 py-1.5 hover:bg-purple transition-colors">
               Bekijk kennisbank
               <AnimatedArrow size="xs" className="text-white" />
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-2">
             {article.relatedArticles.map((related) => (
-              <KnowledgeCard
-                key={related.id}
-                article={related}
-                fallbackPhotoUrl={userPhotoUrl}
-              />
+              <KnowledgeCard key={related.id} article={related} fallbackPhotoUrl={userPhotoUrl} />
             ))}
           </div>
         </div>

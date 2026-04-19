@@ -40,8 +40,12 @@ export function MobileMenu({ userName, userPhoto, showWriteArticle, onNavigate }
       <div className="h-px bg-black/15" />
 
       {/* Search */}
-      <button className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md px-3 py-2 hover:bg-black/10 transition-colors">
-        <span className="icon text-black/50">search</span>
+      <button
+        type="button"
+        aria-label="Zoeken in LiNC Connect"
+        className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md px-3 py-2 hover:bg-black/10 transition-colors"
+      >
+        <span aria-hidden className="icon text-black/50">search</span>
         <span className="text-xs text-black/50">Type om te zoeken...</span>
       </button>
 

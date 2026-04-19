@@ -13,7 +13,7 @@ interface CategoriePageProps {
  * Category detail page. Veiligheid & BHV renders a bespoke layout
  * (contacts grid + documents list); every other category renders
  * a grouped card with one row per article, deep-linking to
- * `/praktisch/[categorie]/[slug]`.
+ * `/praktische-info/[categorie]/[slug]`.
  */
 export default async function CategoriePage({ params }: CategoriePageProps) {
   const { categorie } = await params;
@@ -26,7 +26,7 @@ export default async function CategoriePage({ params }: CategoriePageProps) {
   return (
     <div className="h-full overflow-y-auto">
       <div className="max-w-2xl mx-auto p-4 lg:p-8 flex flex-col gap-6">
-        <Link href="/praktisch" className="w-fit flex items-center gap-1.5 border border-black/10 rounded-md px-3 py-1.5 text-body text-xs text-black hover:bg-black hover:text-white hover:border-black transition-colors">
+        <Link href="/praktische-info" className="w-fit flex items-center gap-1.5 border border-black/10 rounded-md px-3 py-1.5 text-body text-xs text-black hover:bg-black hover:text-white hover:border-black transition-colors">
           <span className="icon h-4">arrow_back</span>
           Terug naar Praktische info
         </Link>
@@ -61,7 +61,7 @@ export default async function CategoriePage({ params }: CategoriePageProps) {
         ) : articles.length > 0 ? (
           <div className="flex flex-col bg-white border border-black/15 rounded-lg shadow-card overflow-hidden">
             {articles.map((article, i) => (
-              <CategoryRow key={article.slug} href={`/praktisch/${category.slug}/${article.slug}`} icon={article.icon} title={article.title} description={article.description} isLast={i === articles.length - 1} />
+              <CategoryRow key={article.slug} href={`/praktische-info/${category.slug}/${article.slug}`} icon={article.icon} title={article.title} description={article.description} isLast={i === articles.length - 1} />
             ))}
           </div>
         ) : (

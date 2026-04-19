@@ -1,5 +1,3 @@
-import { articles } from "./articles";
-
 /*
  * BHV contacts shown on the /praktisch/veiligheid-bhv page. Each
  * card surfaces an avatar, name, role label and a "Bel nu" button
@@ -152,14 +150,6 @@ export function getPracticalCategories() {
 
 export function getPracticalCategory(slug: string) {
   return practicalCategories.find((c) => c.slug === slug);
-}
-
-export function getPracticalArticles() {
-  return articles.filter((a) => a.type === "praktisch");
-}
-
-export function getPracticalArticlesByCategory(category: string) {
-  return articles.filter((a) => a.type === "praktisch" && a.category === category);
 }
 
 /*

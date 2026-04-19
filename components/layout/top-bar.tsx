@@ -11,7 +11,7 @@ const pageTitles: Record<string, string> = {
   "/home": "Home",
   "/kennisbank": "Kennisbank",
   "/mijn-pad": "Mijn pad",
-  "/praktisch": "Praktische info",
+  "/praktische-info": "Praktische info",
   "/team": "Team",
 };
 
@@ -29,7 +29,9 @@ function getBreadcrumbs(pathname: string): Breadcrumb[] {
   if (pathname === "/kennisbank/nieuw") {
     return [{ label: "Kennisbank", href: "/kennisbank" }, { label: "Nieuw artikel" }];
   }
-  const articleMatch = pathname.match(/^\/kennisbank\/artikel\/(.+)/);
+  // Match /kennisbank/<slug>, but skip reserved static routes
+  // like /kennisbank/nieuw so their own handlers win.
+  const articleMatch = pathname.match(/^\/kennisbank\/(?!nieuw$)(.+)/);
   if (articleMatch) {
     const slug = articleMatch[1];
     const title = slug.replace(/-/g, " ").replace(/^./, (c) => c.toUpperCase());
@@ -48,24 +50,24 @@ function getBreadcrumbs(pathname: string): Breadcrumb[] {
     const member = teamMembers.find((m) => m.slug === slug);
     return [{ label: "Team", href: "/team" }, { label: member?.name ?? slug }];
   }
-  const praktischArticleMatch = pathname.match(/^\/praktisch\/([^/]+)\/([^/]+)$/);
+  const praktischArticleMatch = pathname.match(/^\/praktische-info\/([^/]+)\/([^/]+)$/);
   if (praktischArticleMatch) {
     const [, categorySlug, articleSlug] = praktischArticleMatch;
     const category = practicalCategories.find((c) => c.slug === categorySlug);
     const article = getPracticalArticlesForCategory(categorySlug).find((a) => a.slug === articleSlug);
     return [
-      { label: "Praktische info", href: "/praktisch" },
+      { label: "Praktische info", href: "/praktische-info" },
       {
         label: category?.title ?? categorySlug,
-        href: `/praktisch/${categorySlug}`,
+        href: `/praktische-info/${categorySlug}`,
       },
       { label: article?.title ?? articleSlug },
     ];
   }
-  const praktischMatch = pathname.match(/^\/praktisch\/([^/]+)$/);
+  const praktischMatch = pathname.match(/^\/praktische-info\/([^/]+)$/);
   if (praktischMatch) {
     const category = practicalCategories.find((c) => c.slug === praktischMatch[1]);
-    return [{ label: "Praktische info", href: "/praktisch" }, { label: category?.title ?? praktischMatch[1] }];
+    return [{ label: "Praktische info", href: "/praktische-info" }, { label: category?.title ?? praktischMatch[1] }];
   }
   const phaseMatch = pathname.match(/^\/mijn-pad\/([^/]+)$/);
   if (phaseMatch) {
@@ -104,7 +106,7 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
             {breadcrumbs.map((crumb, i) => (
               <span key={i} className="flex items-center gap-1.5 min-w-0">
                 {i > 0 && (
-                  <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+                  <svg aria-hidden width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
                     <path d="M1.625 7.91683L4.6875 5.00016L1.625 2.0835" stroke="black" strokeOpacity="0.4" strokeMiterlimit="10" />
                   </svg>
                 )}
@@ -120,8 +122,12 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md pl-3 pr-14 py-1.5 hover:bg-black/10 transition-colors">
-              <span className="icon text-black/50">search</span>
+            <button
+              type="button"
+              aria-label="Zoeken in LiNC Connect"
+              className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md pl-3 pr-14 py-1.5 hover:bg-black/10 transition-colors"
+            >
+              <span aria-hidden className="icon text-black/50">search</span>
               <span className="text-xs text-black/50">Type om te zoeken...</span>
             </button>
 

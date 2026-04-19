@@ -43,7 +43,7 @@ export function KnowledgeCard({ article, fallbackPhotoUrl }: KnowledgeCardProps)
 
   return (
     <Link
-      href={`/kennisbank/artikel/${slug}`}
+      href={`/kennisbank/${slug}`}
       className="group flex flex-col gap-6 bg-white border border-black/10 rounded-md p-5 transition-colors hover:bg-black/5"
     >
       <div className="flex flex-col gap-4">

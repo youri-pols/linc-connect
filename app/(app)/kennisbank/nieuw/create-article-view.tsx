@@ -110,6 +110,7 @@ export function CreateArticleView() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Type hier de titel"
+              aria-label="Artikeltitel"
               className="font-display font-medium text-h2 text-black placeholder:text-black/60 outline-none bg-transparent"
             />
             <div className="h-px bg-black/15" />

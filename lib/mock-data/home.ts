@@ -66,7 +66,7 @@ export async function getOpenTasksForNewEmployee(): Promise<Task[]> {
       current: true,
       linkedArticle: {
         title: "Git workflow bij LiNC",
-        href: "/kennisbank/artikel/git-workflow-bij-linc",
+        href: "/mijn-pad/phase-2/2-2",
       },
     },
     {
@@ -101,14 +101,14 @@ export async function getShortcuts(): Promise<Shortcut[]> {
       id: "shortcut-bhv",
       label: "BHV-contacten",
       emoji: "🚨",
-      href: "/praktisch/veiligheid-bhv/bhv-procedures-en-vluchtwegen",
+      href: "/praktische-info/veiligheid-bhv",
       variant: "bhv",
     },
     {
       id: "shortcut-verlof",
       label: "Verlof aanvragen",
       emoji: "🏖️",
-      href: "/praktisch/hr/verlof-aanvragen",
+      href: "/praktische-info/verlof-afwezigheid/verlof-aanvragen",
       variant: "default",
     },
     {
@@ -138,7 +138,7 @@ export async function getTeamActivityForNewEmployee(): Promise<TeamActivity[]> {
       action: "plaatste",
       targetTitle: "een nieuw artikel over CSS Grid",
       timeAgo: "2 min geleden",
-      href: "/kennisbank/artikel/css-grid-basics",
+      href: "/kennisbank/css-grid-basics",
     },
     {
       id: "activity-2",
@@ -148,7 +148,7 @@ export async function getTeamActivityForNewEmployee(): Promise<TeamActivity[]> {
       action: "plaatste",
       targetTitle: "een update over het verlofbeleid",
       timeAgo: "1 uur geleden",
-      href: "/praktisch/hr/verlof-aanvragen",
+      href: "/praktische-info/verlof-afwezigheid/verlof-aanvragen",
     },
     {
       id: "activity-3",
@@ -158,7 +158,7 @@ export async function getTeamActivityForNewEmployee(): Promise<TeamActivity[]> {
       action: "plaatste",
       targetTitle: "nieuwe kennisbank over Figma variables",
       timeAgo: "2 uur geleden",
-      href: "/kennisbank/artikel/figma-variables",
+      href: "/kennisbank/figma-variables",
     },
   ];
 }
@@ -211,13 +211,13 @@ export async function getOpenQuestionsForExperiencedEmployee(): Promise<OpenQues
       id: "question-1",
       title: "Hoe exporteer ik assets voor retina schermen in Figma?",
       discipline: "Design",
-      href: "/kennisbank/artikel/figma-retina-assets",
+      href: "/kennisbank/figma-retina-assets",
     },
     {
       id: "question-2",
       title: "Hoe maak ik een component aan?",
       discipline: "Design",
-      href: "/kennisbank/artikel/figma-components",
+      href: "/kennisbank/figma-components",
     },
   ];
 }
@@ -236,7 +236,7 @@ export async function getKnowledgePreviewsForExperiencedEmployee(): Promise<Know
       title: "De design trends van 2026",
       author: "Jij.",
       timeAgo: "5 uur geleden",
-      href: "/kennisbank/artikel/design-trends-2026",
+      href: "/kennisbank/design-trends-2026",
     },
     {
       id: "kb-self-2",
@@ -244,7 +244,7 @@ export async function getKnowledgePreviewsForExperiencedEmployee(): Promise<Know
       title: "Presentatietemplate klanten",
       author: "Jij.",
       timeAgo: "2 dagen geleden",
-      href: "/kennisbank/artikel/presentatietemplate-klanten",
+      href: "/kennisbank/presentatietemplate-klanten",
     },
     {
       id: "kb-self-3",
@@ -252,7 +252,7 @@ export async function getKnowledgePreviewsForExperiencedEmployee(): Promise<Know
       title: "Branding richtlijnen LiNC 2026",
       author: "Jij.",
       timeAgo: "1 week geleden",
-      href: "/kennisbank/artikel/branding-richtlijnen-linc-2026",
+      href: "/kennisbank/branding-richtlijnen-linc-2026",
     },
   ];
 }
@@ -265,7 +265,7 @@ export async function getKnowledgePreviewsForNewEmployee(): Promise<KnowledgePre
       title: "Tailwind v4 migratiegids voor bestaande projecten",
       author: "Youri P.",
       timeAgo: "2 uur geleden",
-      href: "/kennisbank/artikel/tailwind-v4-migratiegids",
+      href: "/kennisbank/tailwind-v4-migratiegids",
     },
     {
       id: "kb-2",
@@ -273,7 +273,7 @@ export async function getKnowledgePreviewsForNewEmployee(): Promise<KnowledgePre
       title: "De design trends van 2026",
       author: "Roy vK.",
       timeAgo: "5 uur geleden",
-      href: "/kennisbank/artikel/design-trends-2026",
+      href: "/kennisbank/design-trends-2026",
     },
     {
       id: "kb-3",
@@ -281,7 +281,7 @@ export async function getKnowledgePreviewsForNewEmployee(): Promise<KnowledgePre
       title: "Google Ads AI Max campagnes",
       author: "Pim E.",
       timeAgo: "6 uur geleden",
-      href: "/kennisbank/artikel/google-ads-ai-max",
+      href: "/kennisbank/google-ads-ai-max",
     },
   ];
 }

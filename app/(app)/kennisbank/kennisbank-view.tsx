@@ -182,8 +182,9 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
 
         {/* Mobile search (right panel is hidden below lg) */}
         <div className="lg:hidden">
-          <div className="flex gap-2 items-center bg-white border border-black/10 rounded-md px-3 py-2 transition-colors focus-within:border-purple">
-            <span className="icon text-black/50">search</span>
+          <label className="flex gap-2 items-center bg-white border border-black/10 rounded-md px-3 py-2 transition-colors focus-within:border-purple">
+            <span className="sr-only">Zoek in de kennisbank</span>
+            <span aria-hidden className="icon text-black/50">search</span>
             <input
               type="text"
               value={search}
@@ -191,7 +192,7 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
               placeholder="Type om te zoeken"
               className="flex-1 min-w-0 font-display text-xs leading-normal text-black placeholder:text-black/50 outline-none"
             />
-          </div>
+          </label>
         </div>
 
         {/* Mobile inline filters */}
@@ -218,8 +219,9 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
       {/* Right panel */}
       <aside className="hidden lg:flex w-71 shrink-0 bg-white border-l border-black/15 flex-col gap-6 py-6">
         <div className="px-6">
-          <div className="flex gap-2 items-center bg-white border border-black/10 rounded-md px-3 py-2.5 transition-colors focus-within:border-purple">
-            <span className="icon text-black/50">search</span>
+          <label className="flex gap-2 items-center bg-white border border-black/10 rounded-md px-3 py-2.5 transition-colors focus-within:border-purple">
+            <span className="sr-only">Zoek in de kennisbank</span>
+            <span aria-hidden className="icon text-black/50">search</span>
             <input
               type="text"
               value={search}
@@ -227,7 +229,7 @@ export function KennisbankView({ articles, currentUserPhotoUrl }: KennisbankView
               placeholder="Type om te zoeken"
               className="flex-1 min-w-0 font-display text-xs leading-normal text-black placeholder:text-black/50 outline-none"
             />
-          </div>
+          </label>
         </div>
 
         {filterSections}
