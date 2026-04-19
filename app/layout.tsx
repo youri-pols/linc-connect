@@ -11,6 +11,7 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "LiNC Connect",
   description: "Het interne communityplatform van LiNC",
+  "apple-mobile-web-app-title": "LiNC Connect",
 };
 
 export default function RootLayout({
