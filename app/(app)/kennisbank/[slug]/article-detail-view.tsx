@@ -147,12 +147,22 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
                 <p className="text-body text-xs text-black/60">Bijgewerkt {article.updatedAtText}</p>
               </div>
             </div>
+            {/*
+             * "nieuw" role: "X reacties" + a down arrow that
+             * scrolls to the Q&A section. "ervaren" / "begeleider"
+             * also see the "X openstaande vraag" hint next to it
+             * so they can jump in and answer an open thread.
+             */}
             <p className="text-body text-xs text-black/60 flex items-center gap-1">
-              {article.readingTimeMinutes} min · {article.commentCount} reacties
-              {article.openQuestionsCount !== undefined && (
+              {article.readingTimeMinutes} min ·{" "}
+              <a href="#qa-section" className="flex items-center gap-1 hover:text-black transition-colors">
+                {article.commentCount} reacties
+                <StaticArrow className="rotate-90" />
+              </a>
+              {role !== "nieuw" && article.openQuestionsCount !== undefined && (
                 <>
                   <span> · </span>
-                  <a href="#qa-section" className="flex items-center gap-1 hover:text-black transition-colors">
+                  <a href="#qa-section" className="flex items-center gap-1 text-purple hover:text-black transition-colors">
                     {article.openQuestionsCount} openstaande vraag
                     <StaticArrow className="rotate-90" />
                   </a>

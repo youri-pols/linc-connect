@@ -29,9 +29,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  // Demo: alle content is door Youri geschreven, dus val altijd
-  // terug op zijn foto als er geen specifieke author photo op het
-  // article / signed-in user staat.
+  // Demo: every article in the mock is authored by Youri, so
+  // always fall back to his photo when neither the article nor
+  // the signed-in user carries one.
   const authorPhotoUrl = article.authorPhotoUrl ?? (user?.user_metadata?.avatar_url as string | undefined) ?? "/images/youri.webp";
 
   return (

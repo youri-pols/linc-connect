@@ -76,6 +76,9 @@ html {
 
   /* Shared card shadow used on grouped cards */
   --shadow-card: 0 0 2.5rem 0 rgba(0, 0, 0, 0.05);
+  /* Dropped-in-from-above shadow used on modals (search, phase
+     complete, schedule) to anchor them above the dimmed backdrop. */
+  --shadow-modal: 0 25px 60px -12px rgba(0, 0, 0, 0.25);
 }
 
 body {

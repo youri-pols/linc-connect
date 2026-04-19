@@ -17,7 +17,7 @@ export function SidebarNav({ userName, userPhoto, open }: SidebarNavProps) {
 
   return (
     <aside
-      className={`hidden lg:flex fixed left-0 top-0 h-screen w-71 bg-white border-r border-black/15 flex-col justify-between py-6 z-40 transition-transform duration-300 ease-in-out ${
+      className={`hidden lg:flex fixed left-0 top-0 h-screen w-71 bg-white border-r border-black/15 flex-col justify-between py-6 z-[60] transition-transform duration-300 ease-in-out ${
         open ? "translate-x-0" : "-translate-x-full"
       }`}
     >

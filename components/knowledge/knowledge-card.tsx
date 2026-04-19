@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useRole } from "@/components/layout/role-context";
 import { AnimatedArrow } from "@/components/ui/animated-arrow";
 import type { KnowledgeArticle, KnowledgeCategory } from "@/lib/types/knowledge";
 
@@ -23,6 +26,12 @@ const CATEGORY_CONFIG: Record<KnowledgeCategory, { label: string; pillBg: string
 
 export function KnowledgeCard({ article, fallbackPhotoUrl }: KnowledgeCardProps) {
   const { title, description, slug, category, authorName, authorPhotoUrl, updatedAtText, readingTimeMinutes, commentCount, openQuestionsCount, isStale } = article;
+  // New employees don't see the "X openstaande vraag" cue —
+  // that nudge is for colleagues and mentors who might step in
+  // and answer an open thread. Pure readers don't need to click
+  // through to the Q&A section.
+  const role = useRole();
+  const showOpenQuestions = role !== "nieuw";
   const cat = CATEGORY_CONFIG[category];
   // Demo: every article is authored by Youri in the mock data,
   // so fall back to Youri's photo instead of an initials circle.
@@ -44,7 +53,7 @@ export function KnowledgeCard({ article, fallbackPhotoUrl }: KnowledgeCardProps)
           </div>
           <p className="text-body text-2xs font-medium text-black/60 text-right">
             {readingTimeMinutes} min · {commentCount} reacties
-            {openQuestionsCount !== undefined && (
+            {showOpenQuestions && openQuestionsCount !== undefined && (
               <>
                 {" "}
                 · <span className="text-purple font-medium">{openQuestionsCount} openstaande vraag</span>

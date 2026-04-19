@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { SearchModal } from "@/components/search/search-modal";
 import { onboardingPath } from "@/lib/mock-data/my-path";
 import { getPracticalArticlesForCategory, practicalCategories } from "@/lib/mock-data/practical";
 import { teamMembers } from "@/lib/mock-data/team-members";
@@ -90,9 +92,10 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
   const pathname = usePathname();
   const breadcrumbs = getBreadcrumbs(pathname);
   const isCreateArticle = pathname === "/kennisbank/nieuw";
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 bg-white border-b border-black/15 flex items-stretch h-14">
+    <header className="sticky top-0 z-[60] bg-white border-b border-black/15 flex items-stretch h-14">
       {/* Desktop layout */}
       <div className="hidden lg:flex items-stretch flex-1">
         <button onClick={onToggleSidebar} className="cursor-pointer flex items-center justify-center px-5 text-black hover:bg-black/5 transition-colors" aria-label="Toggle sidebar">
@@ -125,6 +128,7 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
             <button
               type="button"
               aria-label="Zoeken in LiNC Connect"
+              onClick={() => setSearchOpen(true)}
               className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md pl-3 pr-14 py-1.5 hover:bg-black/10 transition-colors"
             >
               <span aria-hidden className="icon text-black/50">search</span>
@@ -164,6 +168,7 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
           </button>
         </div>
       </div>
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

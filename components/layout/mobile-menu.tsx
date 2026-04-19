@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { SearchModal } from "@/components/search/search-modal";
 import { navItems } from "./nav-items";
 import { UserMenu } from "./user-menu";
 
@@ -13,6 +15,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ userName, userPhoto, showWriteArticle, onNavigate }: MobileMenuProps) {
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -43,11 +46,16 @@ export function MobileMenu({ userName, userPhoto, showWriteArticle, onNavigate }
       <button
         type="button"
         aria-label="Zoeken in LiNC Connect"
+        onClick={() => {
+          onNavigate();
+          setSearchOpen(true);
+        }}
         className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md px-3 py-2 hover:bg-black/10 transition-colors"
       >
         <span aria-hidden className="icon text-black/50">search</span>
         <span className="text-xs text-black/50">Type om te zoeken...</span>
       </button>
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* Write article */}
       {showWriteArticle && (
