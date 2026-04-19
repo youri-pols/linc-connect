@@ -30,10 +30,10 @@ const CATEGORY_LABEL: Record<KnowledgeCategory, string> = {
 
 function Avatar({ src, alt, size = 24 }: { src?: string; alt: string; size?: 24 | 32 | 40 }) {
   const sizeClass = size === 40 ? "size-10" : size === 32 ? "size-8" : "size-6";
-  if (src) {
-    return <Image src={src} alt={alt} width={size} height={size} className={`${sizeClass} rounded-full object-cover shrink-0`} />;
-  }
-  return <div className={`${sizeClass} rounded-full bg-purple shrink-0`} />;
+  // Demo fallback: every author in the mock is Youri — use his
+  // photo when the caller doesn't pass a `src`.
+  const resolved = src || "/images/youri.webp";
+  return <Image src={resolved} alt={alt} width={size} height={size} className={`${sizeClass} rounded-full object-cover shrink-0`} />;
 }
 
 /*
@@ -115,6 +115,10 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
   const isOwner = canWriteArticles(role);
 
   const totalQA = article.threads.reduce((sum, t) => sum + (t.answer ? 2 : 1), 0);
+  // Prefer the article's declared author photo, fall back to the
+  // signed-in user's Google photo so the header avatar still renders
+  // even when the mock / DB entry doesn't carry a photo yet.
+  const articleAuthorPhoto = article.authorPhotoUrl ?? userPhotoUrl;
 
   return (
     <div className="h-full overflow-y-auto scroll-smooth">
@@ -136,7 +140,7 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
 
           <div className="flex items-center justify-between gap-4 flex-wrap pb-3 border-b border-black/15">
             <div className="flex items-center gap-2">
-              <Avatar src={userPhotoUrl} alt={article.authorName} size={24} />
+              <Avatar src={articleAuthorPhoto} alt={article.authorName} size={24} />
               <div className="flex items-center gap-3">
                 <p className="text-body text-xs text-black/80">{article.authorName}</p>
                 <div className="size-1 rounded-full bg-black/60 shrink-0" />
@@ -171,7 +175,7 @@ export function ArticleDetailView({ article, userPhotoUrl }: ArticleDetailViewPr
         {/* Author card + action button — two separate boxes */}
         <div className="flex gap-2 items-stretch border-t border-black/15 pt-6">
           <div className="flex-1 flex items-center gap-3 bg-white border border-black/15 rounded-lg px-4 py-3">
-            <Avatar src={userPhotoUrl} alt={article.authorName} size={40} />
+            <Avatar src={articleAuthorPhoto} alt={article.authorName} size={40} />
             <div className="flex flex-col gap-0.5">
               <p className="text-body text-xs text-black/50">Auteur</p>
               <p className="text-nav-user">{article.authorName}</p>

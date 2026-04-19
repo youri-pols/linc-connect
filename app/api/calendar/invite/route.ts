@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { fetchWithGoogle } from "@/lib/google/fetch";
 import { createClient } from "@/lib/supabase/server";
 
 /*
@@ -37,13 +38,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "email, title, start and end are required" }, { status: 400 });
   }
 
+  // Only need the organiser's email from the session here — the
+  // actual Google API call uses `fetchWithGoogle` which pulls the
+  // access token (and refreshes it when expired) under the hood.
   const supabase = await createClient();
   const { data: sessionData } = await supabase.auth.getSession();
-  const providerToken = sessionData.session?.provider_token;
   const organiserEmail = sessionData.session?.user?.email;
-  if (!providerToken) {
-    return NextResponse.json({ error: "missing_provider_token" }, { status: 401 });
-  }
 
   /*
    * Include the organiser in the attendee list too so both sides
@@ -67,13 +67,9 @@ export async function POST(request: Request) {
   });
 
   try {
-    const res = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events?sendUpdates=all", {
+    const res = await fetchWithGoogle("https://www.googleapis.com/calendar/v3/calendars/primary/events?sendUpdates=all", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${providerToken}`,
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         summary: title,
         description,
@@ -82,6 +78,10 @@ export async function POST(request: Request) {
         attendees,
       }),
     });
+
+    if (!res) {
+      return NextResponse.json({ error: "missing_provider_token" }, { status: 401 });
+    }
 
     if (!res.ok) {
       const text = await res.text();

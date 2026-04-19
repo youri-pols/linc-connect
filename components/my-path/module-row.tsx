@@ -35,20 +35,11 @@ export function ModuleRow({ module, isLast }: ModuleRowProps) {
   const rowAlign = state === "completed" ? "items-center" : "items-start";
 
   return (
-    <div
-      className={`flex ${rowAlign} justify-between gap-4 py-3 border-b ${dividerClass}`}
-    >
+    <div className={`flex ${rowAlign} justify-between gap-4 py-3 border-b ${dividerClass}`}>
       <div className={`flex ${rowAlign} gap-3 flex-1 min-w-0`}>
         {state === "completed" ? (
           <div className="shrink-0 size-4 rounded-full bg-green flex items-center justify-center">
-            <svg
-              width="9"
-              height="8"
-              viewBox="0 0 9 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="block"
-            >
+            <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg" className="block">
               <path d="M3 7.05L0 4.05L1.05 3L3 4.95L7.95 0L9 1.05L3 7.05Z" fill="white" />
             </svg>
           </div>
@@ -58,34 +49,23 @@ export function ModuleRow({ module, isLast }: ModuleRowProps) {
           <div className="shrink-0 size-4 rounded-full border border-black/15" />
         )}
 
-        <div className="flex flex-col gap-1 min-w-0 flex-1">
-          <p
-            className={`text-body text-13 leading-none ${
-              state === "completed"
-                ? "line-through text-black"
-                : state === "locked"
-                ? "text-black opacity-20"
-                : "text-black"
-            }`}
-          >
-            {title}
-          </p>
+        {/* Active modules stack the title + "Bekijk module" link
+            further apart (gap-2.5) so the link breathes under the
+            title; locked + completed rows stay tight (gap-1). */}
+        <div
+          className={`flex flex-col min-w-0 flex-1 ${
+            state === "active" ? "gap-2.5" : "gap-1"
+          }`}
+        >
+          <p className={`text-body text-13 leading-none ${state === "completed" ? "line-through text-black" : state === "locked" ? "text-black opacity-20" : "text-black"}`}>{title}</p>
 
           {state === "active" && href && (
-            <ArrowLink
-              href={href}
-              size="sm"
-              className="text-purple font-display font-semibold text-xs self-start"
-            >
+            <ArrowLink href={href} size="sm" className="text-purple font-display font-semibold text-xs self-start">
               Bekijk module {title}
             </ArrowLink>
           )}
 
-          {state === "locked" && unlockingModule && (
-            <p className="text-body text-xs text-black/60 leading-relaxed">
-              Deze module is beschikbaar na afronding van de module {unlockingModule}.
-            </p>
-          )}
+          {state === "locked" && unlockingModule && <p className="text-body text-xs text-black/60 leading-relaxed">Deze module is beschikbaar na afronding van de module {unlockingModule}.</p>}
         </div>
       </div>
 
@@ -93,23 +73,16 @@ export function ModuleRow({ module, isLast }: ModuleRowProps) {
         {/* XP reward pill — green for completed, gradient for others */}
         {state === "completed" ? (
           <div className="bg-green/10 rounded-sm px-1.5 py-1 flex items-center justify-center">
-            <span className="text-body text-2xs text-green leading-[1.1]">
-              +{xpReward} XP
-            </span>
+            <span className="text-body text-2xs text-green leading-[1.1]">+{xpReward} XP</span>
           </div>
         ) : (
           <div className="xp-pill-gradient-bg rounded-sm px-1.5 py-1 flex items-center justify-center">
-            <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">
-              +{xpReward} XP
-            </span>
+            <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">+{xpReward} XP</span>
           </div>
         )}
 
         {state === "completed" && (
-          <Link
-            href="#"
-            className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-body text-xs text-black/50 hover:text-black transition-colors"
-          >
+          <Link href="#" className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-body text-xs text-black/50 hover:text-black transition-colors">
             <span>Bekijk</span>
             <AnimatedArrow size="xs" />
           </Link>

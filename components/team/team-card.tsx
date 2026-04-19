@@ -43,7 +43,7 @@ export function TeamCard({ member, isCurrentUser, fallbackPhotoUrl, disciplineLa
             {photoUrl ? (
               <Image src={photoUrl} alt={member.name} width={40} height={40} className="size-10 rounded-full object-cover shrink-0" />
             ) : (
-              <div className="size-10 rounded-full bg-purple shrink-0 flex items-center justify-center">
+              <div className="size-10 rounded-full bg-orange shrink-0 flex items-center justify-center">
                 <span className="font-display font-medium text-xs leading-none text-white">
                   {member.name
                     .split(" ")

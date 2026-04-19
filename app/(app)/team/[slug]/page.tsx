@@ -76,7 +76,7 @@ export default async function TeamlidPage({ params }: TeamlidPageProps) {
           {photoUrl ? (
             <Image src={photoUrl} alt={member.name} width={72} height={72} className="size-18 rounded-full object-cover" />
           ) : (
-            <div className="size-18 rounded-full bg-purple flex items-center justify-center">
+            <div className="size-18 rounded-full bg-orange flex items-center justify-center">
               <span className="font-display font-medium text-xl leading-none text-white">
                 {member.name
                   .split(" ")
@@ -169,10 +169,7 @@ export default async function TeamlidPage({ params }: TeamlidPageProps) {
         <section className="flex flex-col gap-4">
           <div className="flex items-center justify-between gap-3 px-5">
             <h2 className="font-display font-medium text-sm text-black leading-none">Recente artikelen</h2>
-            <ArrowLink
-              href="/kennisbank"
-              className="font-display font-medium text-xs"
-            >
+            <ArrowLink href="/kennisbank" className="font-display font-medium text-xs">
               Alles bekijken
             </ArrowLink>
           </div>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { fetchWithGoogle } from "@/lib/google/fetch";
 
 /*
  * Find open slots in a colleague's calendar for the next ~14
@@ -61,32 +61,25 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "email and duration are required" }, { status: 400 });
   }
 
-  const supabase = await createClient();
-  const { data: sessionData } = await supabase.auth.getSession();
-  const providerToken = sessionData.session?.provider_token;
-  if (!providerToken) {
-    return NextResponse.json({ error: "missing_provider_token" }, { status: 401 });
-  }
-
   const now = new Date();
   const horizon = new Date(now);
   horizon.setDate(horizon.getDate() + HORIZON_DAYS);
 
   let busy: { start: Date; end: Date }[] = [];
   try {
-    const res = await fetch("https://www.googleapis.com/calendar/v3/freeBusy", {
+    const res = await fetchWithGoogle("https://www.googleapis.com/calendar/v3/freeBusy", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${providerToken}`,
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         timeMin: now.toISOString(),
         timeMax: horizon.toISOString(),
         items: [{ id: email }],
       }),
     });
+
+    if (!res) {
+      return NextResponse.json({ error: "missing_provider_token" }, { status: 401 });
+    }
 
     if (!res.ok) {
       const body = await res.text();

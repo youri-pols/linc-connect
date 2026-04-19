@@ -13,10 +13,7 @@ interface KnowledgeCardProps {
  * and its purple / red / green accent. Kept as a single map so
  * adding a new category is a one-line change.
  */
-const CATEGORY_CONFIG: Record<
-  KnowledgeCategory,
-  { label: string; pillBg: string; pillText: string }
-> = {
+const CATEGORY_CONFIG: Record<KnowledgeCategory, { label: string; pillBg: string; pillText: string }> = {
   werkprocessen: { label: "Werkproces", pillBg: "bg-purple/10", pillText: "text-purple" },
   "best-practices": { label: "Best practice", pillBg: "bg-green/10", pillText: "text-green" },
   "tools-setup": { label: "Tools & Setup", pillBg: "bg-purple/10", pillText: "text-purple" },
@@ -25,27 +22,14 @@ const CATEGORY_CONFIG: Record<
 };
 
 export function KnowledgeCard({ article, fallbackPhotoUrl }: KnowledgeCardProps) {
-  const {
-    title,
-    description,
-    slug,
-    category,
-    authorName,
-    authorPhotoUrl,
-    updatedAtText,
-    readingTimeMinutes,
-    commentCount,
-    openQuestionsCount,
-    isStale,
-  } = article;
+  const { title, description, slug, category, authorName, authorPhotoUrl, updatedAtText, readingTimeMinutes, commentCount, openQuestionsCount, isStale } = article;
   const cat = CATEGORY_CONFIG[category];
-  const photoUrl = authorPhotoUrl || fallbackPhotoUrl;
+  // Demo: every article is authored by Youri in the mock data,
+  // so fall back to Youri's photo instead of an initials circle.
+  const photoUrl = authorPhotoUrl || fallbackPhotoUrl || "/images/youri.webp";
 
   return (
-    <Link
-      href={`/kennisbank/${slug}`}
-      className="group flex flex-col gap-6 bg-white border border-black/10 rounded-md p-5 transition-colors hover:bg-black/5"
-    >
+    <Link href={`/kennisbank/${slug}`} className="group flex flex-col gap-6 bg-white border border-black/10 rounded-md p-5 transition-colors hover:bg-black/5">
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-1 shrink-0">
@@ -55,9 +39,7 @@ export function KnowledgeCard({ article, fallbackPhotoUrl }: KnowledgeCardProps)
               </div>
             )}
             <div className={`${cat.pillBg} rounded px-2 py-1.5`}>
-              <p className={`text-body text-11 ${cat.pillText} leading-none`}>
-                {cat.label}
-              </p>
+              <p className={`text-body text-11 ${cat.pillText} leading-none`}>{cat.label}</p>
             </div>
           </div>
           <p className="text-body text-2xs font-medium text-black/60 text-right">
@@ -65,10 +47,7 @@ export function KnowledgeCard({ article, fallbackPhotoUrl }: KnowledgeCardProps)
             {openQuestionsCount !== undefined && (
               <>
                 {" "}
-                ·{" "}
-                <span className="text-purple font-medium">
-                  {openQuestionsCount} openstaande vraag
-                </span>
+                · <span className="text-purple font-medium">{openQuestionsCount} openstaande vraag</span>
               </>
             )}
           </p>
@@ -82,17 +61,7 @@ export function KnowledgeCard({ article, fallbackPhotoUrl }: KnowledgeCardProps)
 
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
-          {photoUrl ? (
-            <Image
-              src={photoUrl}
-              alt={authorName}
-              width={24}
-              height={24}
-              className="size-6 rounded-full object-cover shrink-0"
-            />
-          ) : (
-            <div className="size-6 rounded-full bg-purple shrink-0" />
-          )}
+          {photoUrl ? <Image src={photoUrl} alt={authorName} width={24} height={24} className="size-6 rounded-full object-cover shrink-0" /> : <div className="size-6 rounded-full bg-orange shrink-0" />}
           <p className="text-body text-2xs truncate">
             <span className="text-black/80">{authorName}</span>
             <span className="text-black/60"> · Bijgewerkt {updatedAtText}</span>

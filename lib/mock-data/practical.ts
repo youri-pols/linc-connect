@@ -101,8 +101,7 @@ export const practicalCategories: PracticalCategory[] = [
   {
     slug: "veiligheid-bhv",
     title: "Veiligheid & BHV",
-    description:
-      "3 BHV-contacten direct bereikbaar, evacuatieplan, AED-locaties",
+    description: "3 BHV-contacten direct bereikbaar, evacuatieplan, AED-locaties",
     icon: "🚨",
     urgent: true,
   },
@@ -179,21 +178,13 @@ export interface PracticalArticle {
   sections?: PracticalArticleSection[];
 }
 
-const PRACTICAL_LOREM =
-  "Lorem ipsum dolor sit amet consectetur. Non semper pellentesque.";
+const PRACTICAL_LOREM = "Lorem ipsum dolor sit amet consectetur. Non semper pellentesque.";
 
-const PRACTICAL_LEAD =
-  "Lorem ipsum dolor sit amet consectetur. Id malesuada faucibus in elit. Bibendum ullamcorper ut sed urna id magna scelerisque eros sed. Bibendum quisque tristique sed tortor ultrices fermentum volutpat amet. Lectus ultrices aliquet donec mattis. In cras sit sit pretium. Dictum sed et volutpat egestas mauris cursus ornare. Risus euismod malesuada.";
+const PRACTICAL_LEAD = "Lorem ipsum dolor sit amet consectetur. Id malesuada faucibus in elit. Bibendum ullamcorper ut sed urna id magna scelerisque eros sed. Bibendum quisque tristique sed tortor ultrices fermentum volutpat amet. Lectus ultrices aliquet donec mattis. In cras sit sit pretium. Dictum sed et volutpat egestas mauris cursus ornare. Risus euismod malesuada.";
 
-const PRACTICAL_SECTION_BODY =
-  "Lorem ipsum dolor sit amet consectetur. Tincidunt tincidunt non ut ipsum malesuada sit leo. Nulla platea fermentum mi egestas. Eget massa neque interdum viverra ultricies nisi justo faucibus. Quam diam lectus rhoncus nec vel enim in. Amet proin metus ultrices vitae posuere in odio. Vulputate natoque enim morbi sit sagittis. Mus viverra placerat tellus sed.";
+const PRACTICAL_SECTION_BODY = "Lorem ipsum dolor sit amet consectetur. Tincidunt tincidunt non ut ipsum malesuada sit leo. Nulla platea fermentum mi egestas. Eget massa neque interdum viverra ultricies nisi justo faucibus. Quam diam lectus rhoncus nec vel enim in. Amet proin metus ultrices vitae posuere in odio. Vulputate natoque enim morbi sit sagittis. Mus viverra placerat tellus sed.";
 
-const DEFAULT_ARTICLE_SECTIONS: PracticalArticleSection[] = [
-  { body: PRACTICAL_LEAD },
-  { heading: "1. Titel", body: PRACTICAL_SECTION_BODY },
-  { heading: "2. Titel", body: PRACTICAL_SECTION_BODY },
-  { heading: "3. Titel", body: PRACTICAL_SECTION_BODY },
-];
+const DEFAULT_ARTICLE_SECTIONS: PracticalArticleSection[] = [{ body: PRACTICAL_LEAD }, { heading: "1. Titel", body: PRACTICAL_SECTION_BODY }, { heading: "2. Titel", body: PRACTICAL_SECTION_BODY }, { heading: "3. Titel", body: PRACTICAL_SECTION_BODY }];
 
 /*
  * Shared defaults applied on top of each article entry below, so
@@ -202,6 +193,7 @@ const DEFAULT_ARTICLE_SECTIONS: PracticalArticleSection[] = [
  */
 const DEFAULT_ARTICLE: Partial<PracticalArticle> = {
   authorName: "Youri Pols",
+  authorPhotoUrl: "/images/youri.webp",
   updatedAt: "18 februari 2026",
   readingMinutes: 2,
   sections: DEFAULT_ARTICLE_SECTIONS,
@@ -213,8 +205,7 @@ export const practicalArticlesByCategory: Record<string, PracticalArticle[]> = {
       slug: "verlof-aanvragen",
       icon: "🏖️",
       title: "Verlof aanvragen",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Donec porttitor nulla.",
+      description: "Lorem ipsum dolor sit amet consectetur. Donec porttitor nulla.",
       labelPath: "HR · Zelf regelen",
     },
     {
@@ -320,9 +311,7 @@ export const practicalArticlesByCategory: Record<string, PracticalArticle[]> = {
   ],
 };
 
-export function getPracticalArticlesForCategory(
-  slug: string,
-): PracticalArticle[] {
+export function getPracticalArticlesForCategory(slug: string): PracticalArticle[] {
   return practicalArticlesByCategory[slug] ?? [];
 }
 
@@ -332,13 +321,8 @@ export function getPracticalArticlesForCategory(
  * sections to render even when the row only declares the summary
  * fields.
  */
-export function getPracticalArticle(
-  categorySlug: string,
-  articleSlug: string,
-): PracticalArticle | undefined {
-  const match = practicalArticlesByCategory[categorySlug]?.find(
-    (a) => a.slug === articleSlug,
-  );
+export function getPracticalArticle(categorySlug: string, articleSlug: string): PracticalArticle | undefined {
+  const match = practicalArticlesByCategory[categorySlug]?.find((a) => a.slug === articleSlug);
   if (!match) return undefined;
   return { ...DEFAULT_ARTICLE, ...match };
 }

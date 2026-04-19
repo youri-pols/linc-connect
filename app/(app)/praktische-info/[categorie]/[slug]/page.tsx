@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPracticalArticle, getPracticalCategory } from "@/lib/mock-data/practical";
@@ -30,7 +29,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const authorPhotoUrl = article.authorPhotoUrl ?? (user?.user_metadata?.avatar_url as string | undefined);
+  // Demo: alle content is door Youri geschreven, dus val altijd
+  // terug op zijn foto als er geen specifieke author photo op het
+  // article / signed-in user staat.
+  const authorPhotoUrl = article.authorPhotoUrl ?? (user?.user_metadata?.avatar_url as string | undefined) ?? "/images/youri.webp";
 
   return (
     <div className="h-full overflow-y-auto">
@@ -48,7 +50,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           <div className="flex items-center justify-between gap-4 flex-wrap pb-3 border-b border-black/15">
             <div className="flex items-center gap-2">
-              {authorPhotoUrl ? <Image src={authorPhotoUrl} alt={article.authorName ?? "Auteur"} width={24} height={24} className="size-6 rounded-full object-cover shrink-0" /> : <div className="size-6 rounded-full bg-purple shrink-0" />}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={authorPhotoUrl} alt={article.authorName ?? "Auteur"} width={24} height={24} className="size-6 rounded-full object-cover shrink-0" />
               <div className="flex items-center gap-3">
                 <p className="text-body text-xs text-black/80">{article.authorName ?? "Auteur"}</p>
                 {article.updatedAt && (
@@ -78,7 +81,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         {/* Author card + "Markeer als verouderd" */}
         <div className="flex gap-2 items-stretch border-t border-black/15 pt-6">
           <div className="flex-1 flex items-center gap-3 bg-white border border-black/15 rounded-lg px-4 py-3">
-            {authorPhotoUrl ? <Image src={authorPhotoUrl} alt={article.authorName ?? "Auteur"} width={40} height={40} className="size-10 rounded-full object-cover shrink-0" /> : <div className="size-10 rounded-full bg-purple shrink-0" />}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={authorPhotoUrl} alt={article.authorName ?? "Auteur"} width={40} height={40} className="size-10 rounded-full object-cover shrink-0" />
             <div className="flex flex-col gap-0.5">
               <p className="text-body text-xs text-black/50">Auteur</p>
               <p className="text-nav-user">{article.authorName ?? "Auteur"}</p>

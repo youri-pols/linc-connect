@@ -55,8 +55,8 @@ Zie [`.env.example`](./.env.example) voor de volledige lijst. Samengevat:
 | `NEXT_PUBLIC_SUPABASE_URL`      | both          | Supabase → Project Settings → API  |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | both          | idem                               |
 | `SUPABASE_SERVICE_ROLE_KEY`     | server only   | idem, "service_role" key           |
-| `GOOGLE_CLIENT_ID`              | reference     | Google Cloud Console → Credentials |
-| `GOOGLE_CLIENT_SECRET`          | reference     | idem                               |
+| `GOOGLE_CLIENT_ID`              | server        | Google Cloud Console → Credentials |
+| `GOOGLE_CLIENT_SECRET`          | server        | idem                               |
 
 > `SUPABASE_SERVICE_ROLE_KEY` mag **nooit** de `NEXT_PUBLIC_` prefix krijgen — hij bypassed Row-Level Security. De team-pagina gebruikt 'm server-side om via `auth.admin.listUsers()` alle ingelogde users + Google photos op te halen.
 
