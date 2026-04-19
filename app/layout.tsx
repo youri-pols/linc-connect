@@ -11,7 +11,10 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "LiNC Connect",
   description: "Het interne communityplatform van LiNC",
-  "apple-mobile-web-app-title": "LiNC Connect",
+  // iOS home-screen title (emits <meta name="apple-mobile-web-app-title" />)
+  appleWebApp: {
+    title: "LiNC Connect",
+  },
 };
 
 export default function RootLayout({
