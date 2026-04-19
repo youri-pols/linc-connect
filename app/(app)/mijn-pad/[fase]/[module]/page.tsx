@@ -48,7 +48,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
               Module {moduleIndex + 1} van {totalModules}
             </p>
             <div className="xp-pill-gradient-bg rounded-sm px-1.5 py-1 flex items-center justify-center">
-              <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">+{module.xpReward} XP</span>
+              <span className="xp-pill-gradient-text text-body text-2xs leading-pill">+{module.xpReward} XP</span>
             </div>
           </div>
           <h1 className="font-display font-medium text-h2">{module.title}</h1>

@@ -52,11 +52,7 @@ export function ModuleRow({ module, isLast }: ModuleRowProps) {
         {/* Active modules stack the title + "Bekijk module" link
             further apart (gap-2.5) so the link breathes under the
             title; locked + completed rows stay tight (gap-1). */}
-        <div
-          className={`flex flex-col min-w-0 flex-1 ${
-            state === "active" ? "gap-2.5" : "gap-1"
-          }`}
-        >
+        <div className={`flex flex-col min-w-0 flex-1 ${state === "active" ? "gap-2.5" : "gap-1"}`}>
           <p className={`text-body text-13 leading-none ${state === "completed" ? "line-through text-black" : state === "locked" ? "text-black opacity-20" : "text-black"}`}>{title}</p>
 
           {state === "active" && href && (
@@ -73,11 +69,11 @@ export function ModuleRow({ module, isLast }: ModuleRowProps) {
         {/* XP reward pill — green for completed, gradient for others */}
         {state === "completed" ? (
           <div className="bg-green/10 rounded-sm px-1.5 py-1 flex items-center justify-center">
-            <span className="text-body text-2xs text-green leading-[1.1]">+{xpReward} XP</span>
+            <span className="text-body text-2xs text-green leading-pill">+{xpReward} XP</span>
           </div>
         ) : (
           <div className="xp-pill-gradient-bg rounded-sm px-1.5 py-1 flex items-center justify-center">
-            <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">+{xpReward} XP</span>
+            <span className="xp-pill-gradient-text text-body text-2xs leading-pill">+{xpReward} XP</span>
           </div>
         )}
 

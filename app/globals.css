@@ -73,12 +73,25 @@ html {
 
   /* 120% line-height for dense card labels */
   --leading-card: 1.2;
+  /* 110% line-height for XP pills + other single-line labels
+     that need slightly more breathing room than `leading-none`. */
+  --leading-pill: 1.1;
 
   /* Shared card shadow used on grouped cards */
   --shadow-card: 0 0 2.5rem 0 rgba(0, 0, 0, 0.05);
-  /* Dropped-in-from-above shadow used on modals (search, phase
-     complete, schedule) to anchor them above the dimmed backdrop. */
+  /* Same soft-ambient silhouette, tinted with the brand red —
+     used only on the Veiligheid & BHV urgent card. */
+  --shadow-urgent: 0 0 2.5rem 0 rgba(147, 22, 33, 0.05);
+  /* Search modal — dropped-in-from-above with a -12px inset so
+     the outline stays tight against the card edges. */
   --shadow-modal: 0 25px 60px -12px rgba(0, 0, 0, 0.25);
+  /* Full-content modals (phase complete, schedule) — same
+     magnitude as `--shadow-modal` but without the inset so the
+     shadow reaches further for the larger card footprint. */
+  --shadow-modal-lift: 0 25px 60px 0 rgba(0, 0, 0, 0.25);
+
+  /* Badge lift on the "fase voltooid" celebration modal. */
+  --drop-shadow-badge: 0 8px 10px rgba(1, 5, 51, 0.08);
 }
 
 body {

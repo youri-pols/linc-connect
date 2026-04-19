@@ -41,9 +41,15 @@ export async function POST(request: Request) {
   // Only need the organiser's email from the session here — the
   // actual Google API call uses `fetchWithGoogle` which pulls the
   // access token (and refreshes it when expired) under the hood.
+  // Use getUser() rather than session.user.email: getSession() in
+  // a server handler reads the user straight from the cookie and
+  // Supabase warns it may be tampered with. getUser() round-trips
+  // to Supabase Auth to validate.
   const supabase = await createClient();
-  const { data: sessionData } = await supabase.auth.getSession();
-  const organiserEmail = sessionData.session?.user?.email;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const organiserEmail = user?.email;
 
   /*
    * Include the organiser in the attendee list too so both sides

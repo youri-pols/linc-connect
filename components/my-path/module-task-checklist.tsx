@@ -61,7 +61,7 @@ export function ModuleTaskChecklist({ initialTasks, xpReward }: ModuleTaskCheckl
       {/* Completion prompt */}
       <div className="relative bg-white border border-black/15 rounded-lg shadow-card px-5 py-6 flex flex-col gap-3 items-center text-center">
         <div className="xp-pill-gradient-bg rounded-sm px-1.5 py-1 flex items-center justify-center">
-          <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">+{xpReward} XP te verdienen</span>
+          <span className="xp-pill-gradient-text text-body text-2xs leading-pill">+{xpReward} XP te verdienen</span>
         </div>
         <div className="flex flex-col gap-0.5 max-w-md">
           <p className="text-body text-13 text-black">Klaar met deze module?</p>

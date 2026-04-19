@@ -26,7 +26,7 @@ export function BadgeGrid({ badges }: BadgeGridProps) {
             <p className="text-body text-11 text-black/60 leading-normal">{badge.label}</p>
             {typeof badge.xp === "number" && (
               <span className="xp-pill-gradient-bg rounded-sm px-1.5 py-1 flex items-center w-fit justify-center">
-                <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">+{badge.xp} XP</span>
+                <span className="xp-pill-gradient-text text-body text-2xs leading-pill">+{badge.xp} XP</span>
               </span>
             )}
           </div>

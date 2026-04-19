@@ -16,7 +16,7 @@ export function UrgentCategoryCard({ category }: UrgentCategoryCardProps) {
   return (
     <Link
       href={`/praktische-info/${category.slug}`}
-      className="group flex items-center justify-between gap-3 rounded-md bg-red/5 border border-red/20 px-5 py-4 shadow-[0_0_40px_0_rgba(147,22,33,0.05)] hover:bg-red hover:border-red transition-colors"
+      className="group flex items-center justify-between gap-3 rounded-md bg-red/5 border border-red/20 px-5 py-4 shadow-urgent hover:bg-red hover:border-red transition-colors"
     >
       <div className="flex items-center gap-3 min-w-0">
         <span className="text-lg leading-none shrink-0" aria-hidden>

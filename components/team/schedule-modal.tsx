@@ -98,10 +98,10 @@ export function ScheduleModal({ open, onClose, memberName, memberEmail }: Schedu
   if (!open) return null;
 
   return (
-    <div role="dialog" aria-modal="true" aria-labelledby="schedule-modal-title" className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div role="dialog" aria-modal="true" aria-labelledby="schedule-modal-title" className="fixed inset-0 z-70 flex items-center justify-center p-4">
       <button type="button" aria-label="Sluiten" onClick={onClose} className="absolute inset-0 bg-black/50" />
 
-      <div className="relative bg-white rounded-2xl shadow-[0_25px_60px_0_rgba(0,0,0,0.25)] w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden">
+      <div className="relative bg-white rounded-2xl shadow-modal-lift w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-start justify-between gap-4 px-6 pt-6 pb-4 border-b border-black/10">
           <div className="flex flex-col gap-1 min-w-0">

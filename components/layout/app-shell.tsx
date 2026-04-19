@@ -61,7 +61,7 @@ export function AppShell({ userName, userPhoto, children }: AppShellProps) {
       <div className="flex h-screen">
         <SidebarNav userName={userName} userPhoto={userPhoto} open={sidebarOpen} />
         <div
-          className={`flex-1 flex flex-col min-w-0 min-h-0 transition-[margin] duration-300 ease-in-out ${
+          className={`flex-1 flex flex-col min-w-0 min-h-0 transition-all duration-300 ease-in-out ${
             sidebarOpen ? "lg:ml-71" : "lg:ml-0"
           }`}
         >

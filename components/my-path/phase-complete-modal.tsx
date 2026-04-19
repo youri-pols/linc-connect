@@ -66,7 +66,7 @@ export function PhaseCompleteModal({ open, onClose, userName, phaseLabel, phaseN
 
   return (
     <>
-      <div role="dialog" aria-modal="true" aria-labelledby="phase-complete-title" className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div role="dialog" aria-modal="true" aria-labelledby="phase-complete-title" className="fixed inset-0 z-70 flex items-center justify-center p-4">
         {/*
          * Backdrop dim — plain black at 50% alpha. Clicking it
          * closes the modal.
@@ -89,7 +89,7 @@ export function PhaseCompleteModal({ open, onClose, userName, phaseLabel, phaseN
         />
         {/* Confetti image sits between the backdrop/aura and the card */}
         <Confetti burstKey={burstKey} />
-        <div className="phase-modal-card relative bg-white rounded-3xl shadow-[0_25px_60px_0_rgba(0,0,0,0.25)] p-10 w-full max-w-md flex flex-col gap-8 items-center">
+        <div className="phase-modal-card relative bg-white rounded-3xl shadow-modal-lift p-10 w-full max-w-md flex flex-col gap-8 items-center">
           <div className="flex flex-col gap-3 items-center text-center">
             <h2 id="phase-complete-title" className="font-display font-medium text-2xl text-black leading-none">
               Nieuwe badge ontgrendeld
@@ -109,7 +109,7 @@ export function PhaseCompleteModal({ open, onClose, userName, phaseLabel, phaseN
                   backgroundImage: "linear-gradient(240.7deg, #7161ef 28.4%, #ec7357 71.6%)",
                 }}
               />
-              <div className="phase-modal-badge relative drop-shadow-[0_8px_10px_rgba(1,5,51,0.08)]">
+              <div className="phase-modal-badge relative drop-shadow-badge">
                 <Image src={badgeImageSrc} alt={`${phaseLabel} Badge`} width={120} height={120} className="block size-28" priority />
               </div>
             </div>
@@ -119,28 +119,28 @@ export function PhaseCompleteModal({ open, onClose, userName, phaseLabel, phaseN
               <p className="font-display font-medium text-xl text-black leading-none">{phaseLabel} Badge</p>
               <p className="text-body text-sm text-black/80">Voltooid</p>
               <div className="xp-pill-gradient-bg rounded-sm px-1.5 py-1 flex items-center justify-center mt-1">
-                <span className="xp-pill-gradient-text text-body text-2xs leading-[1.1]">+{xpEarned} XP</span>
+                <span className="xp-pill-gradient-text text-body text-2xs leading-pill">+{xpEarned} XP</span>
               </div>
             </div>
 
             {/* XP progress */}
             <div className="flex flex-col gap-1.5 w-full">
               <div className="flex items-center justify-between w-full">
-                <p className="text-body text-xs text-black/60 leading-[1.1]">XP Voortgang</p>
-                <p className="text-body text-xs text-black font-medium leading-[1.1]">
+                <p className="text-body text-xs text-black/60 leading-pill">XP Voortgang</p>
+                <p className="text-body text-xs text-black font-medium leading-pill">
                   {xpTotal} / {xpTarget} XP
                 </p>
               </div>
               <div className="h-1.5 w-full rounded-full bg-black/10 overflow-hidden">
                 <div
-                  className="h-full rounded-full transition-[width] duration-1000 ease-out"
+                  className="h-full rounded-full transition-all duration-1000 ease-out"
                   style={{
                     width: `${progressPct}%`,
                     backgroundImage: "linear-gradient(214deg, #7161ef 28%, #ec7357 72%)",
                   }}
                 />
               </div>
-              <p className="phase-modal-xp-added self-end text-11 text-purple leading-[1.1]">+ {xpEarned} XP toegevoegd</p>
+              <p className="phase-modal-xp-added self-end text-11 text-purple leading-pill">+ {xpEarned} XP toegevoegd</p>
             </div>
           </div>
 
