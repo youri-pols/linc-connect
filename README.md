@@ -9,15 +9,15 @@ in één Next.js app, met Google SSO via Supabase.
 - **Next.js 15** (App Router, Turbopack, Server Components)
 - **TypeScript**
 - **Tailwind CSS v4** (theme tokens + `@layer components`)
-- **Supabase** — Auth (Google SSO, `@linc.nl` domain gate) + users store
-- **Google APIs** — Calendar freeBusy + events (schedule modal op team cards)
+- **Supabase**: Auth (Google SSO, `@linc.nl` domain gate) + users store
+- **Google APIs**: Calendar freeBusy + events (schedule modal op team cards)
 - **Hosting**: Vercel
 
 ### Fonts
 
 - **Roboto** via `next/font/google` (body)
-- **Safiro** — self-hosted `.woff2` in `public/fonts/safiro/` (display)
-- **Material Symbols Rounded** — self-hosted in `public/fonts/material-symbols/`
+- **Safiro**, self-hosted `.woff2` in `public/fonts/safiro/` (display)
+- **Material Symbols Rounded**, self-hosted in `public/fonts/material-symbols/`
 
 ## Setup
 
@@ -58,7 +58,7 @@ Zie [`.env.example`](./.env.example) voor de volledige lijst. Samengevat:
 | `GOOGLE_CLIENT_ID`              | server        | Google Cloud Console → Credentials |
 | `GOOGLE_CLIENT_SECRET`          | server        | idem                               |
 
-> `SUPABASE_SERVICE_ROLE_KEY` mag **nooit** de `NEXT_PUBLIC_` prefix krijgen — hij bypassed Row-Level Security. De team-pagina gebruikt 'm server-side om via `auth.admin.listUsers()` alle ingelogde users + Google photos op te halen.
+> `SUPABASE_SERVICE_ROLE_KEY` mag **nooit** de `NEXT_PUBLIC_` prefix krijgen hij bypassed Row-Level Security. De team-pagina gebruikt 'm server-side om via `auth.admin.listUsers()` alle ingelogde users + Google photos op te halen.
 
 ## Auth + Google integraties
 
@@ -71,17 +71,19 @@ Zie [`.env.example`](./.env.example) voor de volledige lijst. Samengevat:
    http://localhost:3000/auth/callback
    http://localhost:3000/**
    ```
-4. De app filtert op `@linc.nl` domein in [`app/auth/callback/route.ts`](./app/auth/callback/route.ts) — andere accounts worden direct uitgelogd.
+4. De app filtert op `@linc.nl` domein in [`app/auth/callback/route.ts`](./app/auth/callback/route.ts), andere accounts worden direct uitgelogd.
 
 ### Google Cloud Console
 
 Enable deze APIs in je Google Cloud project:
 
-- **Google Calendar API** — nodig voor de "Plan afspraak met collega" modal op team cards. Vereist `calendar.freebusy` (vrije tijden opzoeken) en `calendar.events` (uitnodiging aanmaken).
+- **Google Calendar API**, nodig voor de "Plan afspraak met collega" modal op team cards. Vereist `calendar.freebusy` (vrije tijden opzoeken) en `calendar.events` (uitnodiging aanmaken).
 
 Scopes worden opgevraagd in [`app/(auth)/login/page.tsx`](<./app/(auth)/login/page.tsx>); bij het toevoegen van nieuwe scopes moeten gebruikers opnieuw inloggen om een refreshed provider token te krijgen.
 
-> Google Chat scopes hebben we **niet** meer nodig — de chat-knoppen linken rechtstreeks naar `https://mail.google.com/chat/` zodat de user zelf kan zoeken. De API-variant vereist een geregistreerde Chat app in Cloud Console en die setup valt buiten de scope van dit project.
+De Google access token verloopt na ~1 uur. [`lib/google/fetch.ts`](./lib/google/fetch.ts) wraps de standaard `fetch()` en ververst automatisch via Google's token endpoint wanneer een call 401 terugkrijgt. Zowel `/api/calendar/slots` als `/api/calendar/invite` gaan via deze wrapper, zodat langlopende sessies niet halverwege de middag de "Plan afspraak" flow breken.
+
+> Google Chat scopes hebben we **niet** meer nodig de chat-knoppen linken rechtstreeks naar `https://mail.google.com/chat/` zodat de user zelf kan zoeken. De API-variant vereist een geregistreerde Chat app in Cloud Console en die setup valt buiten de scope van dit project.
 
 ## Projectstructuur
 
@@ -90,15 +92,16 @@ app/
   (auth)/
     login/                  # Google SSO login page
   (app)/                    # Authed shell (sidebar + topbar)
-    home/                   # Dashboard — nieuw / ervaren / begeleider
+    home/                   # Dashboard, nieuw / ervaren / begeleider
     kennisbank/             # Artikelen overzicht + detail + create
-    mijn-pad/               # Onboardingpad — fase → module → taken
+    mijn-pad/               # Onboardingpad, fase → module → taken
     praktische-info/        # Categorie lijst → detail → artikel
     team/                   # Team lijst + lid detailpagina
   api/
     calendar/               # freeBusy + event invite endpoints
   auth/
     callback/               # OAuth callback handler
+    logout/                 # Clears the Supabase session
   not-found.tsx             # 404 page
   layout.tsx                # Root layout (lang="nl", fonts)
 
@@ -109,6 +112,8 @@ components/
   my-path/                  # Onboarding cards, modals, confetti
   practical/                # Category rows, BHV cards, document rows
   team/                     # Team card, schedule modal, XP tier card
+  create/                   # Article-create form bits (WYSIWYG, dropdown)
+  search/                   # Cmd-K style global search modal
   ui/                       # Animated arrow, arrow link, etc.
 
 lib/
@@ -117,8 +122,12 @@ lib/
     client.ts               # Browser client
     server.ts               # Server Component client
     admin.ts                # Service-role client (server only)
+  google/
+    fetch.ts                # fetch() wrapper that auto-refreshes
+                            # the Google access token on 401
   team/
     server.ts               # Supabase Auth → TeamMember merge helpers
+  utils/                    # `cn()` + date/text formatters
   types/                    # TypeScript types per domein
 ```
 
@@ -133,7 +142,7 @@ lib/
 ### Mijn Pad state
 
 - Fase + module + taak data staat in `lib/mock-data/my-path.ts`.
-- De checklist (`ModuleTaskChecklist`) is client-side React state — bij reload reset de demo naar 2-van-5 voltooid.
+- De checklist (`ModuleTaskChecklist`) is client-side React state, bij reload reset de demo naar 2-van-5 voltooid.
 - De "fase voltooid" celebration modal gebruikt CSS-keyframes + een eager-loaded confetti image in `public/images/confetti.webp`.
 - De "Claim je XP" mini-explosie in de module-pagina gebruikt de Web Animations API per particle.
 
@@ -143,12 +152,19 @@ lib/
 - Schedule modal: 14 dagen freeBusy → cal.com-achtige date picker + time grid → titel+beschrijving → `POST /api/calendar/invite` stuurt de uitnodiging via Google Calendar.
 - Beide deelnemers worden attendee (organiser staat op `responseStatus: "accepted"`).
 
+### Global search
+
+- `components/search/search-modal.tsx` opent vanuit de zoek-knop in `top-bar.tsx` / `mobile-menu.tsx`.
+- Demo-only: een hard-gecodeerde lijst met route shortcuts + `String.includes()` filter. Geen search index.
+- Keyboard: ↑/↓ navigeren door resultaten (active row scrollt mee in beeld), Enter navigeert, Escape sluit.
+- Sidebar + top-bar worden tijdelijk naar `z-60` gezet zodat ze zichtbaar blijven bovenop de dimmed overlay (`z-50`); modal card zit op `z-70`.
+
 ## Deploy
 
 1. Push naar je remote.
 2. Importeer in Vercel, vul alle env vars in (incl. `SUPABASE_SERVICE_ROLE_KEY`).
 3. Voeg je Vercel URL toe aan Supabase → Redirect URLs.
-4. Update Google Cloud Console OAuth redirect URI (`https://<jouw-domein>.vercel.app/auth/callback`) als je ook direct-to-Google OAuth gebruikt. Voor de Supabase flow is dat niet nodig — Google callt altijd Supabase.
+4. Update Google Cloud Console OAuth redirect URI (`https://<jouw-domein>/auth/callback`) als je ook direct-to-Google OAuth gebruikt. Voor de Supabase flow is dat niet nodig, Google callt altijd Supabase.
 
 ## Scripts
 

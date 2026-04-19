@@ -16,11 +16,7 @@ export function SidebarNav({ userName, userPhoto, open }: SidebarNavProps) {
   const pathname = usePathname();
 
   return (
-    <aside
-      className={`hidden lg:flex fixed left-0 top-0 h-screen w-71 bg-white border-r border-black/15 flex-col justify-between py-6 z-[60] transition-transform duration-300 ease-in-out ${
-        open ? "translate-x-0" : "-translate-x-full"
-      }`}
-    >
+    <aside className={`hidden lg:flex fixed left-0 top-0 h-screen w-71 bg-white border-r border-black/15 flex-col justify-between py-6 z-60 transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "-translate-x-full"}`}>
       {/* Top: logo + nav */}
       <div className="flex flex-col gap-6">
         {/* Logo */}
@@ -36,13 +32,7 @@ export function SidebarNav({ userName, userPhoto, open }: SidebarNavProps) {
           {navItems.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-nav transition-colors ${
-                  isActive ? "bg-black text-white" : "text-black hover:bg-black/5"
-                }`}
-              >
+              <Link key={item.href} href={item.href} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-nav transition-colors ${isActive ? "bg-black text-white" : "text-black hover:bg-black/5"}`}>
                 <span className="icon">{item.icon}</span>
                 {item.label}
               </Link>

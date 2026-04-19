@@ -95,7 +95,7 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-[60] bg-white border-b border-black/15 flex items-stretch h-14">
+    <header className="sticky top-0 z-60 bg-white border-b border-black/15 flex items-stretch h-14">
       {/* Desktop layout */}
       <div className="hidden lg:flex items-stretch flex-1">
         <button onClick={onToggleSidebar} className="cursor-pointer flex items-center justify-center px-5 text-black hover:bg-black/5 transition-colors" aria-label="Toggle sidebar">
@@ -125,13 +125,10 @@ export function TopBar({ onToggleSidebar, onToggleMobileMenu, mobileMenuOpen, sh
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              aria-label="Zoeken in LiNC Connect"
-              onClick={() => setSearchOpen(true)}
-              className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md pl-3 pr-14 py-1.5 hover:bg-black/10 transition-colors"
-            >
-              <span aria-hidden className="icon text-black/50">search</span>
+            <button type="button" aria-label="Zoeken in LiNC Connect" onClick={() => setSearchOpen(true)} className="cursor-pointer flex items-center gap-1.5 bg-white border border-black/10 rounded-md pl-3 pr-14 py-1.5 hover:bg-black/10 transition-colors">
+              <span aria-hidden className="icon text-black/50">
+                search
+              </span>
               <span className="text-xs text-black/50">Type om te zoeken...</span>
             </button>
 
